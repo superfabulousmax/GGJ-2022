@@ -6,11 +6,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using NaughtyAttributes;
-using yaSingleton;
 using Random = UnityEngine.Random;
 
 [CreateAssetMenu(fileName = "GameManager", menuName = "Singletons/GameManager")]
-public class GamePlayManager : Singleton<GamePlayManager>
+public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
 {
+    protected override void Initialize()
+    {
+        base.Initialize();
 
+        // Initialization code
+    }
 }
