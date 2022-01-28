@@ -6,21 +6,24 @@ public abstract class Ability : ScriptableObject
     private string title;
     [SerializeField]
     private Color color;
-    [SerializeField]
+    [InfoBox("The UI associated with this ability", EInfoBoxType.Normal), ShowAssetPreview, SerializeField]
     private Sprite sprite;
+    [ShowAssetPreview, SerializeField]
+    private GameObject vfx;
     [SerializeField]
     private AudioClip sound;
     [SerializeField]
     private float duration = 0;
-    [SerializeField]
-    private float cooldown = 1.0f;
+    [MinMaxSlider(0.1f, 10.0f), SerializeField]
+    private Vector2 cooldown;
 
     public string Title { get => title; }
     public Color Color { get => color; }
     public Sprite Sprite { get => sprite;  }
+    public GameObject Vfx { get => vfx;  }
     public AudioClip Sound { get => sound; }
     public float Duration { get => duration; }
-    public float Cooldown { get => cooldown; }
+    public Vector2 Cooldown { get => cooldown; }
 
     // Called to create an ability for a player
     public abstract void Initialise(GameObject go);
