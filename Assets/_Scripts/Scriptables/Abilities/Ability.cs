@@ -6,13 +6,13 @@ public abstract class Ability : ScriptableObject
     private string title;
     [SerializeField]
     private Color color;
-    [InfoBox("The UI associated with this ability", EInfoBoxType.Normal), ShowAssetPreview, SerializeField]
+    [Required, InfoBox("The UI associated with this ability", EInfoBoxType.Normal), ShowAssetPreview, SerializeField]
     private Sprite sprite;
-    [ShowAssetPreview, SerializeField]
+    [Required, ShowAssetPreview, SerializeField]
     private GameObject vfx;
     [SerializeField]
     private AudioClip sound;
-    [SerializeField]
+    [ValidateInput("IsGreaterThanZero", "Duration must be greater than zero"), SerializeField]
     private float duration = 0;
     [MinMaxSlider(0.1f, 10.0f), SerializeField]
     private Vector2 cooldown;
@@ -31,4 +31,9 @@ public abstract class Ability : ScriptableObject
     public abstract void TriggerAbility();
     // Called after ability duration expires (not called if duration is 0)
     public abstract void EndAbility();
+
+    private bool IsGreaterThanZero(float value)
+    {
+        return value > 0;
+    }
 }
