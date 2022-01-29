@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D))]
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour, ICreateElement
 {
     private float speed;
     private GameObject damageFX;
