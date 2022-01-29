@@ -8,7 +8,7 @@ public class EnemySeekController : MonoBehaviour
     private float _separationSpeed = 1f;
     private Transform _playerTarget;
     private Rigidbody2D _rigidBody;
-    private const float OffsetToPlayer = 0.75f;
+    private const float OffsetToPlayer = 0.65f;
     private const float OffsetToEnemy = 1f;
     private int health;
 
