@@ -2,9 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class State
+public abstract class AbilityState
 {
+    public AbilitySet abilities;
     protected PlayerContext _context;
+    public void SetAbilities(AbilitySet abilities)
+    {
+        this.abilities = abilities;
+    }
 
     public void SetContext(PlayerContext context)
     {

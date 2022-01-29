@@ -5,23 +5,17 @@ using UnityEngine;
 public class PlayerContext
 {
     // A reference to the current state of the Context.
-    private State _state = null;
+    private AbilityState _state = null;
 
-    public PlayerContext(State state)
+    public PlayerContext(AbilityState state)
     {
         this.TransitionTo(state);
     }
 
-    public void TransitionTo(State state)
+    public void TransitionTo(AbilityState state)
     {
         this._state = state;
         this._state.SetContext(this);
-    }
-
-    // The Context delegates part of its behavior to the current State
-    // object.
-    public void Enter()
-    {
         this._state.Enter();
     }
 

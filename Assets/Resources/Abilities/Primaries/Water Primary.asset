@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff7a796e0f8243440bb01ec973c4b809, type: 3}
+  m_Script: {fileID: 11500000, guid: 5523e59ca2f05bd468843a056969f23c, type: 3}
   m_Name: Water Primary
   m_EditorClassIdentifier: 
-  title: Icicle
+  title: 
   color: {r: 0, g: 0, b: 0, a: 0}
   sprite: {fileID: 0}
   vfx: {fileID: 0}
   sound: {fileID: 0}
-  duration: 2
-  cooldown: {x: 0.1, y: 10}
+  duration: 0
+  cooldown: {x: 0, y: 0}
   projectile: {fileID: 11400000, guid: 01c14538e09c4ca4fb8543a94d1b8a34, type: 2}
