@@ -10,6 +10,8 @@ public abstract class Ability : ScriptableObject
     private Sprite sprite;
     [Required, ShowAssetPreview, SerializeField]
     private GameObject vfx;
+    [Required, ShowAssetPreview, SerializeField]
+    private GameObject projectile;
     [SerializeField]
     private AudioClip sound;
     [ValidateInput("IsGreaterThanZero", "Duration must be greater than zero"), SerializeField]
@@ -21,6 +23,7 @@ public abstract class Ability : ScriptableObject
     public Color Color { get => color; }
     public Sprite Sprite { get => sprite;  }
     public GameObject Vfx { get => vfx;  }
+    public GameObject Projectile { get => projectile; }
     public AudioClip Sound { get => sound; }
     public float Duration { get => duration; }
     public Vector2 Cooldown { get => cooldown; }
