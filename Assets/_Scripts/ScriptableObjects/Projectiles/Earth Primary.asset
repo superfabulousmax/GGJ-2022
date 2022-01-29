@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8983a2b64872b748a85628e0f76c9a6, type: 3}
   m_Name: Earth Primary
   m_EditorClassIdentifier: 
-  projectile: {fileID: 7082526359450386466, guid: 7d5bd5de5513b2c4897eca600049195e,
+  projectile: {fileID: 7082526359450386466, guid: 0394f0f153729f44db180a8a5117c844,
     type: 3}
   speed: 30
   damageFX: {fileID: 0}

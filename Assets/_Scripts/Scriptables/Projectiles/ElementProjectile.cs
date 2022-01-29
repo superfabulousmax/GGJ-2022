@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
 
 [CreateAssetMenu(menuName = "Projectiles/Basic Projectile", fileName = "New Projectile")]
 public class ElementProjectile : ScriptableObject
 {
-    [SerializeField]
+    [ShowAssetPreview, SerializeField]
     private GameObject projectile;
     [SerializeField]
     private float speed;
