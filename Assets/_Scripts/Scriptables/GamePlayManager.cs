@@ -27,7 +27,6 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
         Debug.Log("Initializing the GamePlayManager");
         player = Resources.Load<GameObject>("Prefabs/Player");
         Instantiate(player);
-        // Initialization code
     }
 
     protected override void Deinitialize()

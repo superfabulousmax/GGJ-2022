@@ -16,6 +16,8 @@ public abstract class Ability : ScriptableObject
     private float duration = 0;
     [MinMaxSlider(0.1f, 10.0f), SerializeField]
     private Vector2 cooldown;
+    [SerializeField]
+    private ElementProjectile projectile;
 
     public string Title { get => title; }
     public Color Color { get => color; }
@@ -24,6 +26,7 @@ public abstract class Ability : ScriptableObject
     public AudioClip Sound { get => sound; }
     public float Duration { get => duration; }
     public Vector2 Cooldown { get => cooldown; }
+    public ElementProjectile Projectile { get => projectile; }
 
     // Called to create an ability for a player
     public abstract void Initialise(GameObject go);
