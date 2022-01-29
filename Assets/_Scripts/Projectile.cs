@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D))]
@@ -15,7 +13,6 @@ public class Projectile : MonoBehaviour
         this.damageFX = elementProjectile.DamageFX;
         _rb = GetComponent<Rigidbody2D>();
         _rb.velocity = direction * speed;
-        Debug.Log(direction);
     }
 
     void OnTriggerEnter2D(Collider2D hitInfo)
