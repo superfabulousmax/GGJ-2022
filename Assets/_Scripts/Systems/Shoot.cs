@@ -22,7 +22,7 @@ public class Shoot : MonoBehaviour
 
     private void ChangeAbility(AbilitySet abilities)
     {
-        Debug.Log("Here");
+        Debug.Log($"Change Ability to {abilities.primary.Title}");
         currentAbilities = abilities;
     }
 
