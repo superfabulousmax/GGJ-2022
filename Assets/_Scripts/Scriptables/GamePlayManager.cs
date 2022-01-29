@@ -43,7 +43,7 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
     {
         Debug.Log("CallChangeAbilityEvent");
         currentAbilities = abilities;
-        playerContext.TransitionTo(newState);
+        _playerContext.TransitionTo(newState);
     }
     protected override void Initialize()
     {
@@ -65,7 +65,6 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
         SetupEnemy();
         //changeAbility?.Invoke(fireAbilitySet);
     }
-
 
     private void LoadPrimaries()
     {
@@ -147,7 +146,7 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
         {
             changeAbility?.Invoke(earthAbilitySet, earthState);
         }
-        playerContext.Handle();
+        _playerContext.Handle();
     }
 
     protected override void Deinitialize()
