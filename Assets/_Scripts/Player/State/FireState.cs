@@ -73,15 +73,15 @@ public class FireState : AbilityState
 
         if (!secondaryActive && canShootPrimary && Input.GetKeyDown(KeyCode.Mouse0))
         {
-            var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var direction = (mousePos - _context.player.position);
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 direction = (mousePos - (Vector2)_context.player.position);
             var lookDirection = mousePos;
             var lookAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
             fire.rotation = Quaternion.Euler(0, 0, lookAngle);
             direction.Normalize();
             GameObject.Instantiate(firePrimary.Projectile.ProjectilePrefab, _context.player.position, Quaternion.identity).TryGetComponent<Projectile>(out var projectile);
-            Physics2D.IgnoreCollision(playerCollider, projectile.GetComponent<Collider2D>());
-            projectile.Instantiate(firePrimary.Projectile, fire.right, _context.player, fire);
+            Physics2D.IgnoreCollision(playerCollider, projectile.GetCollider);
+            projectile.Instantiate(firePrimary.Projectile, direction, _context.player, fire);
             canShootPrimary = false;
             primaryTimer = 0;
         }
@@ -97,8 +97,8 @@ public class FireState : AbilityState
     private void EnableSecondary()
     {
         secondaryActive = true;
-        var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        var direction = (mousePos - _context.player.position);
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 direction = (mousePos - (Vector2)_context.player.position);
         var lookDirection = mousePos;
         var lookAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
         fire.rotation = Quaternion.Euler(0, 0, lookAngle);
@@ -117,7 +117,7 @@ public class FireState : AbilityState
             Physics2D.IgnoreCollision(playerCollider, flames.trigger.GetCollider(i).GetComponent<Collider2D>());
         }
 
-        flameThrower.Instantiate(firePrimary.Projectile, fire.right, _context.player, fire);
+        flameThrower.Instantiate(firePrimary.Projectile, direction, _context.player, fire);
     }
 
     private void DisableSecondary()

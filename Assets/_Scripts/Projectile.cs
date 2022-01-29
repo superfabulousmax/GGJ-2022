@@ -5,14 +5,23 @@ public class Projectile : MonoBehaviour, ICreateElement
 {
     private float speed;
     private GameObject damageFX;
-    private Rigidbody2D _rb;
+    private Rigidbody2D _rigidBody;
+    private Collider2D _collider;
+
+    public Collider2D GetCollider => _collider;
+    public Rigidbody2D GetRigidbody => _rigidBody;
+
+    void Awake()
+    {
+        _collider = GetComponent<Collider2D>();
+        _rigidBody = GetComponent<Rigidbody2D>();
+    }
 
     public void Instantiate(ElementProjectile elementProjectile, Vector2 direction, Transform player, Transform fire)
     {
         this.speed = elementProjectile.Speed;
         this.damageFX = elementProjectile.DamageFX;
-        _rb = GetComponent<Rigidbody2D>();
-        _rb.velocity = direction * speed;
+        _rigidBody.velocity = direction * speed;
     }
 
     void OnCollisionEnter2D(Collision2D col)
