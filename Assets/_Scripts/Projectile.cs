@@ -7,7 +7,7 @@ public class Projectile : MonoBehaviour, ICreateElement
     private GameObject damageFX;
     private Rigidbody2D _rb;
 
-    public void Instantiate(ElementProjectile elementProjectile, Vector2 direction)
+    public void Instantiate(ElementProjectile elementProjectile, Vector2 direction, Transform player, Transform fire)
     {
         this.speed = elementProjectile.Speed;
         this.damageFX = elementProjectile.DamageFX;
