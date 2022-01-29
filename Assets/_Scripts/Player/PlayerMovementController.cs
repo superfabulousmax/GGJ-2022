@@ -6,9 +6,10 @@ using UnityEngine;
 public class PlayerMovementController : MonoBehaviour
 {
     [SerializeField] private Camera _camera;
-    [SerializeField] private GameObject _spriteGO;
-    private SpriteRenderer _spriteRenderer;
+    [SerializeField] private GameObject _spriteBody;
+
     private Rigidbody2D _rigidbody;
+    private SpriteRenderer _spriteRenderer;
 
     private float _moveSpeed = 2.5f;
     private Vector2 _moveAxis = Vector2.zero;
@@ -20,7 +21,7 @@ public class PlayerMovementController : MonoBehaviour
     void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _spriteRenderer = _spriteGO.GetComponent<SpriteRenderer>();
+        _spriteRenderer = _spriteBody.GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -52,7 +53,7 @@ public class PlayerMovementController : MonoBehaviour
             FlipSpriteRendererY(true);
         }
 
-        _spriteGO.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        _spriteBody.transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
     void FixedUpdate()

@@ -6,6 +6,7 @@ public class PlayerHealthController : MonoBehaviour
 {
     [SerializeField] private float _health = 100f;
     [SerializeField] private GameObject _barFill;
+    [SerializeField] private ParticleSystem _hurtVFX;
 
     private bool _alive;
     private float _maxHealth;
@@ -37,6 +38,8 @@ public class PlayerHealthController : MonoBehaviour
 
         _barFill.transform.localPosition = _fillPosition;
         _barFill.transform.localScale = _fillScale;
+
+        _hurtVFX.Emit(1);
 
         if (_health <= 0)
         {
