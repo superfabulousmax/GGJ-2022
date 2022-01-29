@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface ICreateElement
 {
-    public void Instantiate(ElementProjectile elementProjectile, Vector2 direction);
+    public void Instantiate(ElementProjectile elementProjectile, Vector2 direction, Transform player, Transform fire);
 }

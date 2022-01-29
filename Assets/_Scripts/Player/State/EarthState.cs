@@ -61,7 +61,7 @@ public class EarthState : AbilityState
             direction.Normalize();
             GameObject.Instantiate(earthPrimary.Projectile.ProjectilePrefab, _context.player.position, Quaternion.identity).TryGetComponent<Projectile>(out var projectile);
             Physics2D.IgnoreCollision(playerCollider, projectile.GetComponent<Collider2D>());
-            projectile.Instantiate(earthPrimary.Projectile, fire.right);
+            projectile.Instantiate(earthPrimary.Projectile, fire.right, _context.player, fire);
             canShootPrimary = false;
             primaryTimer = 0;
         }

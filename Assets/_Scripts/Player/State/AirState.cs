@@ -61,7 +61,7 @@ public class AirState : AbilityState
             direction.Normalize();
             GameObject.Instantiate(airPrimary.Projectile.ProjectilePrefab, _context.player.position, Quaternion.identity).TryGetComponent<Projectile>(out var projectile);
             Physics2D.IgnoreCollision(playerCollider, projectile.GetComponent<Collider2D>());
-            projectile.Instantiate(airPrimary.Projectile, fire.right);
+            projectile.Instantiate(airPrimary.Projectile, fire.right, _context.player, fire);
             canShootPrimary = false;
             primaryTimer = 0;
         }

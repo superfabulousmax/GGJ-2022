@@ -63,7 +63,7 @@ public class FireState : AbilityState
             direction.Normalize();
             GameObject.Instantiate(firePrimary.Projectile.ProjectilePrefab, _context.player.position, Quaternion.identity).TryGetComponent<Projectile>(out var projectile);
             Physics2D.IgnoreCollision(playerCollider, projectile.GetComponent<Collider2D>());
-            projectile.Instantiate(firePrimary.Projectile, fire.right);
+            projectile.Instantiate(firePrimary.Projectile, fire.right, _context.player, fire);
             canShootPrimary = false;
             primaryTimer = 0;
         }
@@ -84,14 +84,14 @@ public class FireState : AbilityState
         var lookAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
         fire.rotation = Quaternion.Euler(0, 0, lookAngle);
         direction.Normalize();
-        GameObject.Instantiate(fireSecondary.Projectile.ProjectilePrefab, _context.player.position, Quaternion.identity).TryGetComponent<FlameThrower>(out var flameThrower);
+        GameObject.Instantiate(fireSecondary.Projectile.ProjectilePrefab, _context.player.position, fire.rotation).TryGetComponent<FlameThrower>(out var flameThrower);
         var flames = flameThrower.GetComponent<ParticleSystem>();
         var colliderNumber = flames.trigger.colliderCount;
         for(int i = 0; i< colliderNumber; ++i)
         {
             Physics2D.IgnoreCollision(playerCollider, flames.trigger.GetCollider(i).GetComponent<Collider2D>());
         }
-       
-        //projectile.Instantiate(currentAbilities.primary.Projectile, fire.right);
+
+        flameThrower.Instantiate(firePrimary.Projectile, fire.right, _context.player, fire);
     }
 }
