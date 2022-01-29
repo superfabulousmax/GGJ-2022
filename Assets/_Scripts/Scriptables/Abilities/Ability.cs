@@ -12,7 +12,8 @@ public abstract class Ability : ScriptableObject
     private GameObject vfx;
     [SerializeField]
     private AudioClip sound;
-    [ValidateInput("IsGreaterThanZero", "Duration must be greater than zero"), SerializeField]
+    //ValidateInput("IsGreaterThanZero", "Duration must be greater than zero")
+    [SerializeField]
     private float duration = 0;
     [MinMaxSlider(0.1f, 10.0f), SerializeField]
     private Vector2 cooldown;

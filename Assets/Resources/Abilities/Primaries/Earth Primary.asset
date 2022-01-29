@@ -18,5 +18,5 @@ MonoBehaviour:
   vfx: {fileID: 0}
   sound: {fileID: 0}
   duration: 0
-  cooldown: {x: 0, y: 0}
+  cooldown: {x: 0.3, y: 2}
   projectile: {fileID: 11400000, guid: 3d576849e1b131d4686e0feb4041925b, type: 2}

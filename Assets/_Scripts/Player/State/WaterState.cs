@@ -7,16 +7,24 @@ public class WaterState : AbilityState
     private WaterAbility waterPrimary;
     private WaterAbility waterSecondary;
     private int buildUpKillNumber;
+    private float primaryCoolDown;
+    private float primaryTimer;
     private float secondaryCoolDown;
     private float secondaryTimer;
     private Transform fire;
     private Collider2D playerCollider;
+    private bool canShootPrimary;
+    private bool canShootSecondary;
     public override void Enter()
     {
         this.waterPrimary = abilities.primary as WaterAbility;
         this.waterSecondary = abilities.secondary as WaterAbility;
+        this.primaryCoolDown = waterPrimary.Cooldown.x;
+        this.primaryTimer = 0;
         this.secondaryCoolDown = waterSecondary.Cooldown.x;
         this.secondaryTimer = 0;
+        canShootPrimary = true;
+        canShootSecondary = false;
         buildUpKillNumber = 10;
         fire = _context.player.Find("Fire");
         playerCollider = _context.player.GetComponent<Collider2D>();
@@ -31,13 +39,19 @@ public class WaterState : AbilityState
     public override void Exit()
     {
         buildUpKillNumber = 0;
+        primaryTimer = 0;
         secondaryTimer = 0;
         _context.gamePlayManager.changeAbility -= ChangeAbility;
     }
 
     public override void Handle()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        primaryTimer += Time.deltaTime;
+        if (primaryTimer >= primaryCoolDown)
+        {
+            canShootPrimary = true;
+        }
+        if (canShootPrimary && Input.GetKeyDown(KeyCode.Mouse0))
         {
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             var direction = (mousePos - _context.player.position);
@@ -48,6 +62,8 @@ public class WaterState : AbilityState
             GameObject.Instantiate(waterPrimary.Projectile.ProjectilePrefab, _context.player.position, Quaternion.identity).TryGetComponent<Projectile>(out var projectile);
             Physics2D.IgnoreCollision(playerCollider, projectile.GetComponent<Collider2D>());
             projectile.Instantiate(waterPrimary.Projectile, fire.right);
+            canShootPrimary = false;
+            primaryTimer = 0;
         }
     }
 }
