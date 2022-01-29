@@ -10,23 +10,23 @@ public abstract class Ability : ScriptableObject
     private Sprite sprite;
     [Required, ShowAssetPreview, SerializeField]
     private GameObject vfx;
-    [Required, ShowAssetPreview, SerializeField]
-    private GameObject projectile;
     [SerializeField]
     private AudioClip sound;
     [ValidateInput("IsGreaterThanZero", "Duration must be greater than zero"), SerializeField]
     private float duration = 0;
     [MinMaxSlider(0.1f, 10.0f), SerializeField]
     private Vector2 cooldown;
+    [SerializeField]
+    private ElementProjectile projectile;
 
     public string Title { get => title; }
     public Color Color { get => color; }
     public Sprite Sprite { get => sprite;  }
     public GameObject Vfx { get => vfx;  }
-    public GameObject Projectile { get => projectile; }
     public AudioClip Sound { get => sound; }
     public float Duration { get => duration; }
     public Vector2 Cooldown { get => cooldown; }
+    public ElementProjectile Projectile { get => projectile; }
 
     // Called to create an ability for a player
     public abstract void Initialise(GameObject go);
