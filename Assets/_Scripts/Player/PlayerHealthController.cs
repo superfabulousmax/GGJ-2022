@@ -1,0 +1,47 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerHealthController : MonoBehaviour
+{
+    [SerializeField] private float _health = 100f;
+    [SerializeField] private GameObject _barFill;
+
+    private bool _alive;
+    private float _maxHealth;
+    private float _initFillScaleX;
+    private Vector3 _fillScale;
+    private Vector3 _fillPosition;
+
+    private void Awake()
+    {
+        _alive = true;
+        _maxHealth = _health;
+        _initFillScaleX = _barFill.transform.localScale.x;
+        _fillScale = _barFill.transform.localScale;
+        _fillPosition = _barFill.transform.localPosition;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if (!_alive)
+        {
+            return;
+        }
+
+        _health -= damage;
+        var healthFactor = _health / _maxHealth;
+
+        _fillScale.x = healthFactor * _initFillScaleX;
+        _fillPosition.x = -(_initFillScaleX - _fillScale.x) * 0.5f;
+
+        _barFill.transform.localPosition = _fillPosition;
+        _barFill.transform.localScale = _fillScale;
+
+        if (_health <= 0)
+        {
+            _alive = false;
+            // send event
+        }
+    }
+}
