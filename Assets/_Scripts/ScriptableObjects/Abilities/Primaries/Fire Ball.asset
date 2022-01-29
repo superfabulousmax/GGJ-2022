@@ -19,4 +19,4 @@ MonoBehaviour:
   sound: {fileID: 0}
   duration: 2
   cooldown: {x: 0.1, y: 10}
-  projectile: {fileID: 11400000, guid: f4c127e7dbe5d374a828bbd2704fe95e, type: 2}
+  projectile: {fileID: 11400000, guid: 0431997b2dd49d143a5d18a4e05f8943, type: 2}

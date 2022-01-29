@@ -9,11 +9,10 @@ public class Shoot : MonoBehaviour
     [SerializeField]
     private Transform fire;
     private Collider2D _collider;
-    // Start is called before the first frame update
+
     void Start()
     {
         _collider = GetComponent<Collider2D>();
-        //fire = transform;
     }
 
     // Update is called once per frame
