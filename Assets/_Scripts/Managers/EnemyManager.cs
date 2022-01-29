@@ -8,12 +8,12 @@ public class EnemyManager
     private GameObject _enemyPrefab;
     private ObjectPool<EnemySeekController> _enemyPool;
     private GameObject _enemyHolder;
-    private const int MaxEnemies = 128;
 
-    public EnemyManager(GameObject player, GameObject enemyPrefab)
+
+    public EnemyManager(GameObject player, Enemies enemies)
     {
         _player = player;
-        _enemyPrefab = enemyPrefab;
+        _enemyPrefab = enemies.fireEnemy;
         _enemyHolder = GameObject.Instantiate(new GameObject());
 
         _enemyPool = new ObjectPool<EnemySeekController>(
@@ -22,8 +22,8 @@ public class EnemyManager
             actionOnRelease: enemy => enemy.gameObject.SetActive(false),
             actionOnDestroy: enemy => GameObject.Destroy(enemy),
             collectionCheck: false,
-            defaultCapacity: MaxEnemies,
-            maxSize: MaxEnemies
+            defaultCapacity: Utils.Constants.MaxEnemies,
+            maxSize: Utils.Constants.MaxEnemies
         );
     }
 
