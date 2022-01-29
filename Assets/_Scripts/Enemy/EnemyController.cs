@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D _rigidBody;
     private const float OffsetToPlayer = 0.5f;
     private const float OffsetToEnemy = 1f;
+    private int health;
 
     void Awake()
     {
@@ -46,6 +47,10 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out PlayerMovementController playerController))
         {
             Debug.Log("player touched");
+        }
+        if (collision.gameObject.TryGetComponent(out ICreateElement element))
+        {
+            Destroy(gameObject);
         }
     }
 

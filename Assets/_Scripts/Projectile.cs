@@ -15,9 +15,16 @@ public class Projectile : MonoBehaviour, ICreateElement
         _rb.velocity = direction * speed;
     }
 
-    void OnTriggerEnter2D(Collider2D hitInfo)
+    void OnCollisionEnter2D(Collision2D col)
     {
-        Destroy(gameObject);
+        //if(col.gameObject.TryGetComponent<ICreateElement>(out var element))
+        //{
+        //    return;
+        //}
+        if(col.gameObject.TryGetComponent<EnemyController>(out var enemyController))
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnBecameInvisible()
