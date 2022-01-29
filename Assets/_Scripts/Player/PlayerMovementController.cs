@@ -52,7 +52,7 @@ public class PlayerMovementController : MonoBehaviour
             FlipSpriteRendererY(true);
         }
 
-        _rigidbody.rotation = angle;
+        _spriteGO.transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
     void FixedUpdate()
