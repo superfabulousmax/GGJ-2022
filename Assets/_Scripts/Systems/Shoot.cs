@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using yaSingleton;
 
 public class Shoot : MonoBehaviour
 {
@@ -34,7 +31,6 @@ public class Shoot : MonoBehaviour
         currentAbilities = GamePlayManager.Instance.CurrentAbilities;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Mouse0))
