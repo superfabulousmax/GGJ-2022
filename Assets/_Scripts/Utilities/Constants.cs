@@ -11,4 +11,6 @@ namespace Utils
         public const string SecondariesFolder = "Abilities/Secondaries/";
         public const int SecondaryThreshold = 10;
     }
+
+    public enum Elements { Fire, Water, Air, Earth }
 }

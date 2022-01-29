@@ -13,10 +13,13 @@ public class FireState : AbilityState
     private float primaryTimer;
     private float secondaryCoolDown;
     private float secondaryTimer;
+    private float secondaryDuration;
     private Transform fire;
     private Collider2D playerCollider;
     private bool canShootPrimary;
     private bool canShootSecondary;
+    private bool secondaryActive;
+    private FlameThrower flameThrower;
     public override void Enter()
     {
         this.firePrimary = abilities.primary as FireAbility;
@@ -25,8 +28,10 @@ public class FireState : AbilityState
         this.primaryTimer = 0;
         this.secondaryCoolDown = fireSecondary.Cooldown.x;
         this.secondaryTimer = 0;
+        this.secondaryDuration = fireSecondary.Duration;
         canShootPrimary = true;
         canShootSecondary = false;
+        secondaryActive = false;
         buildUpKillNumber = 10;
         fire = _context.player.Find("Fire");
         playerCollider = _context.player.GetComponent<Collider2D>();
@@ -43,17 +48,30 @@ public class FireState : AbilityState
         buildUpKillNumber = 0;
         primaryTimer = 0;
         secondaryTimer = 0;
+        secondaryActive = false;
         _context.gamePlayManager.changeAbility -= ChangeAbility;
     }
 
     public override void Handle()
     {
-        primaryTimer += Time.deltaTime;
-        if(primaryTimer >= primaryCoolDown)
+        if(secondaryActive)
         {
-            canShootPrimary = true;
+            secondaryTimer += Time.deltaTime;
+            if(secondaryTimer >= secondaryDuration)
+            {
+                DisableSecondary();
+            }
         }
-        if (canShootPrimary && Input.GetKeyDown(KeyCode.Mouse0))
+        else
+        {
+            primaryTimer += Time.deltaTime;
+            if (primaryTimer >= primaryCoolDown)
+            {
+                canShootPrimary = true;
+            }
+        }
+
+        if (!secondaryActive && canShootPrimary && Input.GetKeyDown(KeyCode.Mouse0))
         {
             var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             var direction = (mousePos - _context.player.position);
@@ -67,7 +85,7 @@ public class FireState : AbilityState
             canShootPrimary = false;
             primaryTimer = 0;
         }
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        else if (!secondaryActive && Input.GetKeyDown(KeyCode.Mouse1))
         {
             if (buildUpKillNumber >= Constants.SecondaryThreshold)
             {
@@ -78,13 +96,20 @@ public class FireState : AbilityState
 
     private void EnableSecondary()
     {
+        secondaryActive = true;
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         var direction = (mousePos - _context.player.position);
         var lookDirection = mousePos;
         var lookAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
         fire.rotation = Quaternion.Euler(0, 0, lookAngle);
         direction.Normalize();
-        GameObject.Instantiate(fireSecondary.Projectile.ProjectilePrefab, _context.player.position, fire.rotation).TryGetComponent<FlameThrower>(out var flameThrower);
+        var hasProjectile = GameObject.Instantiate(fireSecondary.Projectile.ProjectilePrefab, _context.player.position, fire.rotation).TryGetComponent<FlameThrower>(out flameThrower);
+        if(hasProjectile == false)
+        {
+            Debug.LogWarning("Projectile not found for fire secondary");
+            return;
+        }
+        flameThrower.gameObject.transform.parent = _context.player;
         var flames = flameThrower.GetComponent<ParticleSystem>();
         var colliderNumber = flames.trigger.colliderCount;
         for(int i = 0; i< colliderNumber; ++i)
@@ -93,5 +118,15 @@ public class FireState : AbilityState
         }
 
         flameThrower.Instantiate(firePrimary.Projectile, fire.right, _context.player, fire);
+    }
+
+    private void DisableSecondary()
+    {
+        secondaryTimer = 0;
+        secondaryActive = false;
+        if (flameThrower != null)
+        {
+            GameObject.Destroy(flameThrower.gameObject);
+        }
     }
 }

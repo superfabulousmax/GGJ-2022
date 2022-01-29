@@ -10,6 +10,7 @@ public class EnemySeekController : MonoBehaviour
     private Rigidbody2D _rigidBody;
     private const float OffsetToPlayer = 0.75f;
     private const float OffsetToEnemy = 1f;
+    private int health;
 
     void Awake()
     {
