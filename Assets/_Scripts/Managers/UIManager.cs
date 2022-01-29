@@ -20,7 +20,7 @@ public class UIManager : yaSingleton.Singleton<UIManager>
         canvasPrefab = Resources.Load<GameObject>("Prefabs/Canvases");
         canvas = GameObject.Instantiate(canvasPrefab);
 
-        iconContainer = canvas.transform.GetChild(0).Find("Icons");
+        iconContainer = canvas.transform.GetChild(0).GetChild(0);
         icons = iconContainer.GetComponentsInChildren<Transform>();
         outlines = icons.Select(icon => icon.GetComponent<Outline>()).Where(outline => outline != null).ToArray();
         SelectIcon(Elements.Fire);

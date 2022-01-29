@@ -64,7 +64,6 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
         InitAbilityStates();
         SetUpPlayer();
         SetupEnemy();
-        //changeAbility?.Invoke(fireAbilitySet);
     }
 
     private void LoadPrimaries()
@@ -128,6 +127,11 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
     public override void OnUpdate()
     {
         // fire
+        var y = Input.mouseScrollDelta.y;
+        if(y != 0)
+        {
+
+        }
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             changeAbility?.Invoke(fireAbilitySet, fireState);
