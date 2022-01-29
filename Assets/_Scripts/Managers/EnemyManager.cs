@@ -6,7 +6,7 @@ public class EnemyManager
 {
     private GameObject _player;
     private GameObject _enemyPrefab;
-    private ObjectPool<EnemyController> _enemyPool;
+    private ObjectPool<EnemySeekController> _enemyPool;
     private GameObject _enemyHolder;
     private const int MaxEnemies = 128;
 
@@ -16,8 +16,8 @@ public class EnemyManager
         _enemyPrefab = enemyPrefab;
         _enemyHolder = GameObject.Instantiate(new GameObject());
 
-        _enemyPool = new ObjectPool<EnemyController>(
-            createFunc: () => GameObject.Instantiate(_enemyPrefab, _enemyHolder.transform).GetComponent<EnemyController>(),
+        _enemyPool = new ObjectPool<EnemySeekController>(
+            createFunc: () => GameObject.Instantiate(_enemyPrefab, _enemyHolder.transform).GetComponent<EnemySeekController>(),
             actionOnGet: enemy => enemy.gameObject.SetActive(true),
             actionOnRelease: enemy => enemy.gameObject.SetActive(false),
             actionOnDestroy: enemy => GameObject.Destroy(enemy),

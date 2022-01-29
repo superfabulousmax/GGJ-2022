@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemySeekController : MonoBehaviour
 {
-    private float _moveSpeed = 2f;
+    private float _moveSpeed = 1.75f;
     private float _separationSpeed = 1f;
     private Transform _playerTarget;
     private Rigidbody2D _rigidBody;
@@ -22,11 +22,6 @@ public class EnemyController : MonoBehaviour
         _playerTarget = playerTransform;
     }
 
-    public void StopSeeking()
-    {
-        _playerTarget = null;
-    }
-
     void FixedUpdate()
     {
         if (_playerTarget)
@@ -41,24 +36,16 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.TryGetComponent(out PlayerMovementController playerController))
-        {
-            Debug.Log("player touched");
-        }
-    }
-
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out EnemyController enemyController))
+        if (collision.gameObject.TryGetComponent(out EnemySeekController enemyController))
         {
             Vector2 distance = transform.position - collision.transform.position;
             float magnitude = distance.magnitude;
             if (magnitude < OffsetToEnemy)
             {
-                //_rigidBody.MovePosition(_rigidBody.position + _separationSpeed * distance.normalized * Time.fixedDeltaTime);
-                transform.Translate(distance.normalized * _separationSpeed * Time.fixedDeltaTime);
+                //_rigidBody.MovePosition(_rigidBody.position + _separationSpeed * distance.normalized * Time.deltaTime);
+                transform.Translate(distance.normalized * _separationSpeed * Time.deltaTime);
             }
         }
     }
