@@ -21,7 +21,7 @@ public class Projectile : MonoBehaviour, ICreateElement
         //{
         //    return;
         //}
-        if(col.gameObject.TryGetComponent<EnemyController>(out var enemyController))
+        if(col.gameObject.TryGetComponent<EnemySeekController>(out var enemyController))
         {
             Destroy(gameObject);
         }
