@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using NaughtyAttributes;
-using Random = UnityEngine.Random;
 using Utils;
 
 [CreateAssetMenu(fileName = "GameManager", menuName = "Singletons/GameManager")]
