@@ -20,7 +20,7 @@ public class EnemySpawner : MonoBehaviour
     private GameObject _player;
     private Enemies enemies;
     private float timer;
-    private float coolDown = 10;
+    private float coolDown = 3;
     private GameObject _enemyHolder;
     public void Init(GameObject player)
     {
@@ -62,11 +62,33 @@ public class EnemySpawner : MonoBehaviour
         return elements[index];
     }
 
+    private Vector3 GetOuterViewPort()
+    {
+        var randomNumber = Random.Range(0, 4);
+        switch(randomNumber)
+        {
+            // up
+            case 0:
+                return Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0, 1), Random.Range(1.2f, 1.4f), 0));
+            // down
+            case 1:
+                return Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0, 1), Random.Range(-1.2f, -1.4f), 0));
+            // left
+            case 2:
+                return Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(-1.2f, -1.4f), Random.Range(0, 1), 0));
+            // right
+            case 3:
+                return Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(1.2f, 1.4f), Random.Range(0, 1) , 0));
+            default:
+                return Vector3.zero;
+        }
+    }
+
     private void SpawnFormation()
     {
         var randomElement = GetRandomElement();
         // In viewport coordinades, the bottom left of the camera view is 0,0 and the top right 1,1
-        var newPosition = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(1.5f, 3f), Random.Range(1.5f, 3f), 0));
+        var newPosition = GetOuterViewPort();
 
         var formationPrefab = GetRandomFormation();
         var formation = GameObject.Instantiate(formationPrefab, newPosition, Quaternion.identity);
