@@ -37,6 +37,7 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
 
     // Events
     public event Action<AbilitySet, AbilityState> changeAbility;
+    public event Action<Elements> selectIcon;
     public AbilitySet CurrentAbilities { get => currentAbilities; }
 
     public void CallChangeAbilityEvent(AbilitySet abilities, AbilityState newState)
@@ -50,7 +51,7 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
         Debug.Log("Initializing the GamePlayManager");
         base.Initialize();
         changeAbility = CallChangeAbilityEvent;
-
+        selectIcon = UIManager.Instance.SelectIcon;
         currentAbilities = fireAbilitySet;
 
         // Load
@@ -130,21 +131,25 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             changeAbility?.Invoke(fireAbilitySet, fireState);
+            selectIcon?.Invoke(Elements.Fire);
         }
         // water
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             changeAbility?.Invoke(waterAbilitySet, waterState);
+            selectIcon?.Invoke(Elements.Water);
         }
         // air
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             changeAbility?.Invoke(airAbilitySet, airState);
+            selectIcon?.Invoke(Elements.Air);
         }
         // earth
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             changeAbility?.Invoke(earthAbilitySet, earthState);
+            selectIcon?.Invoke(Elements.Earth);
         }
         _playerContext.Handle();
     }
@@ -159,14 +164,14 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
         _enemyManager = new EnemyManager(_player, _enemyPrefab);
 
         // Example spawning
-        _enemyManager.Spawn(new Vector2(4f, 0));
-        _enemyManager.Spawn(new Vector2(-4f, 0));
-        _enemyManager.Spawn(new Vector2(0, 4f));
-        _enemyManager.Spawn(new Vector2(0, -4f));
+        //_enemyManager.Spawn(new Vector2(4f, 0));
+        //_enemyManager.Spawn(new Vector2(-4f, 0));
+        //_enemyManager.Spawn(new Vector2(0, 4f));
+        //_enemyManager.Spawn(new Vector2(0, -4f));
 
-        _enemyManager.Spawn(new Vector2(2f, 2f));
-        _enemyManager.Spawn(new Vector2(-2f, 2f));
-        _enemyManager.Spawn(new Vector2(2f, -2f));
-        _enemyManager.Spawn(new Vector2(-2f, -2f));
+        //_enemyManager.Spawn(new Vector2(2f, 2f));
+        //_enemyManager.Spawn(new Vector2(-2f, 2f));
+        //_enemyManager.Spawn(new Vector2(2f, -2f));
+        //_enemyManager.Spawn(new Vector2(-2f, -2f));
     }
 }
