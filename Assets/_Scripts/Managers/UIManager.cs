@@ -17,6 +17,7 @@ public class UIManager : yaSingleton.Singleton<UIManager>
     protected override void Initialize()
     {
         base.Initialize();
+
         canvasPrefab = Resources.Load<GameObject>("Prefabs/Canvases");
         canvas = GameObject.Instantiate(canvasPrefab);
 
