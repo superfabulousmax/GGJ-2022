@@ -44,7 +44,7 @@ public class EnemySpawner : yaSingleton.Singleton<EnemySpawner>
         timer += Time.deltaTime;
         if(timer >= coolDown)
         {
-            SpawnFormation();
+            //SpawnFormation();
         }
     }
 
