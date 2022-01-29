@@ -22,7 +22,7 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
 
     // Player
     private GameObject _player;
-    private PlayerContext playerContext;
+    private PlayerContext _playerContext;
     private FireState fireState;
     private WaterState waterState;
     private AirState airState;
@@ -48,11 +48,18 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
         Debug.Log("Initializing the GamePlayManager");
         base.Initialize();
         changeAbility = CallChangeAbilityEvent;
-        LoadPrimaries();
-        InitAbilityStates();
+
         currentAbilities = fireAbilitySet;
+
+        // Load
+        LoadPrimaries();
+        _playerPrefab = Resources.Load<GameObject>("Prefabs/Player");
+        _enemyPrefab = Resources.Load<GameObject>("Prefabs/Enemy");
+
+        // Initialization code
+        InitAbilityStates();
         SetUpPlayer();
-       
+        SetupEnemy();
         //changeAbility?.Invoke(fireAbilitySet);
     }
 
@@ -76,8 +83,7 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
 
     private void SetUpPlayer()
     {
-        playerContext = new PlayerContext(fireState);
-        _playerPrefab = Resources.Load<GameObject>("Prefabs/Player");
+        _playerContext = new PlayerContext(fireState);
         _player = Instantiate(_playerPrefab);
     }
 
@@ -130,12 +136,6 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
         {
             changeAbility?.Invoke(earthAbilitySet);
         }
-        _playerPrefab = Resources.Load<GameObject>("Prefabs/Player");
-        _enemyPrefab = Resources.Load<GameObject>("Prefabs/Enemy");
-
-        // Initialization code
-        _player = Instantiate(_playerPrefab);
-        SetupEnemy();
     }
 
     protected override void Deinitialize()
