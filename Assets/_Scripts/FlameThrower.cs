@@ -19,9 +19,9 @@ public class FlameThrower : MonoBehaviour, ICreateElement
     }
     void Update()
     {
-        var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        var direction = (mousePos - player.position);
-        var lookDirection = mousePos;
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 direction = (mousePos - (Vector2)player.position).normalized;
+        Vector2 lookDirection = direction;
         var lookAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
         fire.rotation = Quaternion.Euler(0, 0, lookAngle);
         transform.rotation = fire.rotation;
