@@ -30,8 +30,6 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
     private EarthState earthState;
 
     private GameObject _playerPrefab;
-    private GameObject _enemyPrefab;
-    private EnemyManager _enemyManager;
 
     // Units
 
@@ -57,7 +55,6 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
         // Load
         LoadPrimaries();
         _playerPrefab = Resources.Load<GameObject>("Prefabs/Player");
-        _enemyPrefab = Resources.Load<GameObject>("Prefabs/Enemy");
 
         // Initialization code
         LoadSecondaries();
@@ -165,7 +162,6 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
 
     private void SetupEnemy()
     {
-        _enemyManager = new EnemyManager(_player, _enemyPrefab);
 
         // Example spawning
         //_enemyManager.Spawn(new Vector2(4f, 0));
