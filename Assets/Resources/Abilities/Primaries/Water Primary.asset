@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5523e59ca2f05bd468843a056969f23c, type: 3}
   m_Name: Water Primary
   m_EditorClassIdentifier: 
-  title: 
+  title: Ice Bolt
   color: {r: 0, g: 0, b: 0, a: 0}
   sprite: {fileID: 0}
   vfx: {fileID: 0}
