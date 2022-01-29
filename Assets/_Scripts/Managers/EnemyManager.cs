@@ -12,12 +12,11 @@ public class EnemyManager
     private GameObject _enemyHolder;
     private Enemies _enemies;
 
-    public EnemyManager(GameObject player, Enemies enemies)
+    public EnemyManager(GameObject player, Enemies enemies, GameObject enemyHolder)
     {
         _player = player;
         _enemies = enemies;
-        _enemyHolder = GameObject.Instantiate(new GameObject());
-
+        _enemyHolder = enemyHolder;
         _fireEnemyPool = new ObjectPool<EnemySeekController>(
             createFunc: () => GameObject.Instantiate(_enemies.fireEnemy, _enemyHolder.transform).GetComponent<EnemySeekController>(),
             actionOnGet: enemy => enemy.gameObject.SetActive(true),
@@ -64,6 +63,7 @@ public class EnemyManager
 
         return enemy.gameObject;
     }
+
 
     public EnemySeekController FromElement(Utils.Elements element)
     {

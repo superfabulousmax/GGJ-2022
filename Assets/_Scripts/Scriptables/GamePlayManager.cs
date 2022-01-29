@@ -30,9 +30,12 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
 
     private GameObject _playerPrefab;
 
+    private EnemySpawner enemySpawner;
+
     // Units
 
     // Events
+    public event Action<GameObject> onPlayerInstantiated;
     public event Action<AbilitySet, AbilityState> changeAbility;
     public event Action<Elements> selectIcon;
     public AbilitySet CurrentAbilities { get => currentAbilities; }
@@ -49,6 +52,7 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
         base.Initialize();
         changeAbility = CallChangeAbilityEvent;
         selectIcon = UIManager.Instance.SelectIcon;
+        onPlayerInstantiated = OnPlayerInstantiated;
         currentAbilities = fireAbilitySet;
 
         // Load
@@ -60,6 +64,11 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
         InitAbilityStates();
         SetUpPlayer();
         SetupEnemy();
+    }
+
+    public void OnPlayerInstantiated(GameObject player)
+    {
+
     }
 
     private void LoadPrimaries()
@@ -92,6 +101,7 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
     {
         _player = Instantiate(_playerPrefab);
         _playerContext = new PlayerContext(fireState, _player.transform, this);
+        onPlayerInstantiated?.Invoke(_player);
     }
 
     private void InitFireState()
@@ -161,16 +171,8 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
 
     private void SetupEnemy()
     {
-
-        // Example spawning
-        //_enemyManager.Spawn(new Vector2(4f, 0));
-        //_enemyManager.Spawn(new Vector2(-4f, 0));
-        //_enemyManager.Spawn(new Vector2(0, 4f));
-        //_enemyManager.Spawn(new Vector2(0, -4f));
-
-        //_enemyManager.Spawn(new Vector2(2f, 2f));
-        //_enemyManager.Spawn(new Vector2(-2f, 2f));
-        //_enemyManager.Spawn(new Vector2(2f, -2f));
-        //_enemyManager.Spawn(new Vector2(-2f, -2f));
+        var spawnerObject = new GameObject("Enemy Spawner");
+        enemySpawner = spawnerObject.AddComponent<EnemySpawner>();
+        enemySpawner.Init(_player);
     }
 }
