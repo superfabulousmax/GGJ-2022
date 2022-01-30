@@ -5,7 +5,7 @@ using UnityEngine;
 using Utils;
 public class EnemySeekController : MonoBehaviour
 {
-    private float _moveSpeed = 1.75f;
+    private float _moveSpeed = 1.8f;
     private float _separationSpeed = 1f;
     private Transform _playerTarget;
     private Rigidbody2D _rigidBody;

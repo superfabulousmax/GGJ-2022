@@ -15,10 +15,9 @@ public class UIManager : PersistentSingleton<UIManager>
     private Transform [] icons;
     private Outline [] outlines;
     private TMP_Text gameOverText;
+    private TMP_Text timer;
+    private float timeElapsed;
     public static UIManager Instance;
-    private int totalKilled;
-    private int totalHealed;
-    private int totalDamage;
 
     public void Awake()
     {
@@ -34,10 +33,12 @@ public class UIManager : PersistentSingleton<UIManager>
         canvas = GameObject.Instantiate(canvasPrefab);
         gameOverText = canvas.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>();
         gameOverText.enabled = false;
+        timer = canvas.transform.GetChild(0).GetChild(3).GetComponent<TMP_Text>();
         iconContainer = canvas.transform.GetChild(0).GetChild(0);
         icons = iconContainer.GetComponentsInChildren<Transform>();
         outlines = icons.Select(icon => icon.GetComponent<Outline>()).Where(outline => outline != null).ToArray();
         SelectIcon(Elements.Fire);
+        timeElapsed = 0;
     }
 
 
@@ -60,21 +61,27 @@ public class UIManager : PersistentSingleton<UIManager>
         }
     }
 
+    private void Update()
+    {
+        timeElapsed += Time.deltaTime;
+        timer.text = Math.Round(timeElapsed, 2).ToString();
+    }
+
     internal void UpdateDisplayDamage(int amount)
     {
         // todo
-        totalDamage = amount;
+        //totalDamage = amount;
     }
 
     internal void UpdateDisplayHeals(int amount)
     {
         // todo
-        totalHealed = amount;
+        //totalHealed = amount;
     }
 
     internal void UpdateDisplayKills(int amount)
     {
         // todo
-        totalKilled = amount;
+        //totalKilled = amount;
     }
 }

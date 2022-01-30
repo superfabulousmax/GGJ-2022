@@ -18,8 +18,9 @@ public class LevelTimer : MonoBehaviour
     {
         if (isGamerOver)
             return;
-        var time = TimeSpan.FromSeconds(Time.realtimeSinceStartup);
-        if(time.Minutes >= Constants.GameLengthInMinutes)
+
+        timer += Time.deltaTime;
+        if (timer >= Constants.GameLengthInSeconds)
         {
             GamePlayManager.Instance.SendGameOver();
             isGamerOver = true;
