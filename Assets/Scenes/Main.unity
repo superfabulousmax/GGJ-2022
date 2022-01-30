@@ -677,7 +677,7 @@ MonoBehaviour:
       type: 3}
     earthSecondaryDamage: {fileID: 8300000, guid: 7858afa07d538cf4d987c03c6cf8ba20,
       type: 3}
-    heal: {fileID: 8300000, guid: b57cc06f6fea04d4c9edd533fe70cf48, type: 3}
+    heal: {fileID: 8300000, guid: 5a537468197e881459eb77b9e73fd011, type: 3}
 --- !u!114 &1182088845
 MonoBehaviour:
   m_ObjectHideFlags: 0
