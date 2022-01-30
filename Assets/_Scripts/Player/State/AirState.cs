@@ -55,11 +55,10 @@ public class AirState : AbilityState
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 direction = (mousePos - (Vector2)_context.player.position);
-            var lookDirection = mousePos;
-            var lookAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+            var lookAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             fire.rotation = Quaternion.Euler(0, 0, lookAngle);
             direction.Normalize();
-            GameObject.Instantiate(airPrimary.Projectile.ProjectilePrefab, _context.player.position, Quaternion.identity).TryGetComponent<Projectile>(out var projectile);
+            GameObject.Instantiate(airPrimary.Projectile.ProjectilePrefab, _context.player.position, fire.rotation).TryGetComponent<Projectile>(out var projectile);
             Physics2D.IgnoreCollision(playerCollider, projectile.GetComponent<Collider2D>());
             projectile.Instantiate(airPrimary.Projectile, direction, _context.player, fire);
             canShootPrimary = false;

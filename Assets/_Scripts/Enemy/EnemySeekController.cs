@@ -8,13 +8,18 @@ public class EnemySeekController : MonoBehaviour
     private float _separationSpeed = 1f;
     private Transform _playerTarget;
     private Rigidbody2D _rigidBody;
+    private Collider2D _collider;
     private const float OffsetToPlayer = 0.65f;
     private const float OffsetToEnemy = 1f;
     private int health;
 
+    public Rigidbody2D GetRigidBody => _rigidBody;
+    public Collider2D GetCollider => _collider;
+
     void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<Collider2D>();
     }
 
     public void SpawnAndSeek(Vector3 spawnPosition, Transform playerTransform)

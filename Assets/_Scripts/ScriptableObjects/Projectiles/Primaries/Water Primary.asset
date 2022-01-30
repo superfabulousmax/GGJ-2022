@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 7082526359450386466, guid: cd1b82ccd63a9514188ef7d6e8f58a55,
     type: 3}
-  speed: 30
+  speed: 20
   damageFX: {fileID: 0}
