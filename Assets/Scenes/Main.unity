@@ -651,6 +651,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 560148384}
+  fireDamageVFX: {fileID: 356192090153275935, guid: 1ff4ffaa55620f94aa012a13fd36f027,
+    type: 3}
+  waterDamageVFX: {fileID: 7191910569731513416, guid: 2b54005996fd7b24ea05a92bbcc73808,
+    type: 3}
+  airDamageVFX: {fileID: 2832977864358239927, guid: 90ebfea452cf33e45bebf5e11add3220,
+    type: 3}
+  earthDamageVFX: {fileID: 958378468428849944, guid: e47a46e00fecc0f44b6bb2f2d0a438c2,
+    type: 3}
 --- !u!1 &1727938692
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,6 +22,14 @@ public class GamePlayManager : MonoBehaviour
     // Player
     [SerializeField]
     private GameObject _player;
+    [SerializeField]
+    private GameObject fireDamageVFX;
+    [SerializeField]
+    private GameObject waterDamageVFX;
+    [SerializeField]
+    private GameObject airDamageVFX;
+    [SerializeField]
+    private GameObject earthDamageVFX;
     private PlayerContext _playerContext;
     private FireState fireState;
     private WaterState waterState;
@@ -168,6 +176,6 @@ public class GamePlayManager : MonoBehaviour
     {
         var spawnerObject = new GameObject("Enemy Spawner");
         enemySpawner = spawnerObject.AddComponent<EnemySpawner>();
-        enemySpawner.Init(_player);
+        enemySpawner.Init(_player, fireDamageVFX, waterDamageVFX, airDamageVFX, earthDamageVFX);
     }
 }
