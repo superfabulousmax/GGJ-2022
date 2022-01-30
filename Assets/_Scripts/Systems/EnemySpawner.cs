@@ -106,9 +106,12 @@ public class EnemySpawner : MonoBehaviour
         isPressureMusicPlaying = true;
         if(sound.audioSource != null)
         {
-            sound.audioSource.Stop();
-            sound.audioSource.clip = sound.pressureAudio;
-            sound.audioSource.Play();
+            var pressureSoundInfo = new Sound() { clip = sound.pressureAudio, source = sound.audioSource, volume = sound.audioSource.volume, loop = sound.audioSource.loop };
+            var normalSoundInfo = new Sound() { clip = sound.normalAudio, source = sound.audioSource, volume = sound.audioSource.volume, loop = sound.audioSource.loop };
+            var fadeIn = AudioFader.FadeIn(pressureSoundInfo, 3, Mathf.SmoothStep);
+            StartCoroutine(AudioFader.FadeOut(normalSoundInfo, 2, Mathf.SmoothStep, fadeIn));
+            //sound.audioSource.clip = sound.pressureAudio;
+            //sound.audioSource.Play();
         }
     }
 
@@ -117,9 +120,13 @@ public class EnemySpawner : MonoBehaviour
         isPressureMusicPlaying = false;
         if (sound.audioSource != null)
         {
-            sound.audioSource.Stop();
-            sound.audioSource.clip = sound.normalAudio;
-            sound.audioSource.Play();
+            var pressureSoundInfo = new Sound() { clip = sound.pressureAudio, source = sound.audioSource, volume = sound.audioSource.volume, loop = sound.audioSource.loop };
+            var normalSoundInfo = new Sound() { clip = sound.normalAudio, source = sound.audioSource, volume = sound.audioSource.volume, loop = sound.audioSource.loop };
+            var fadeIn = AudioFader.FadeIn(normalSoundInfo, 3, Mathf.SmoothStep);
+            StartCoroutine(AudioFader.FadeOut(pressureSoundInfo, 2, Mathf.SmoothStep, fadeIn));
+            //sound.audioSource.Stop();
+            //sound.audioSource.clip = sound.normalAudio;
+            //sound.audioSource.Play();
         }
     }
 

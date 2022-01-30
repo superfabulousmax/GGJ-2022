@@ -602,6 +602,7 @@ GameObject:
   - component: {fileID: 1182088842}
   - component: {fileID: 1182088844}
   - component: {fileID: 1182088843}
+  - component: {fileID: 1182088845}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -662,11 +663,27 @@ MonoBehaviour:
     audioSource: {fileID: 560148385}
     normalAudio: {fileID: 8300000, guid: fdb35ea32dfb69e44acc81da89ef4f05, type: 3}
     pressureAudio: {fileID: 8300000, guid: fcd2f7761535d5b4fa23402bb8cc410a, type: 3}
-    fireDamage: {fileID: 0}
-    waterDamage: {fileID: 0}
-    airDamage: {fileID: 0}
-    earthDamage: {fileID: 0}
+    firePrimaryDamage: {fileID: 0}
+    waterPrimaryDamage: {fileID: 0}
+    airPrimaryDamage: {fileID: 0}
+    earthPrimaryDamage: {fileID: 0}
+    fireSecondaryDamage: {fileID: 0}
+    waterSecondaryDamage: {fileID: 0}
+    airSecondaryDamage: {fileID: 0}
+    earthSecondaryDamage: {fileID: 0}
     heal: {fileID: 0}
+--- !u!114 &1182088845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182088841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5bd9c01f5c24e843bc167e780c9648e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1727938692
 GameObject:
   m_ObjectHideFlags: 0
