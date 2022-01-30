@@ -65,17 +65,17 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnKill(int totalKilled)
     {
-        UIManager.Instance.UpdateDisplayKills();
+        UIManager.Instance.UpdateDisplayKills(totalKilled);
     }
 
     private void OnHeal(int totalHealed)
     {
-        UIManager.Instance.UpdateDisplayHeals();
+        UIManager.Instance.UpdateDisplayHeals(totalHealed);
     }
 
     private void OnDamage(int totalDamaged)
     {
-        UIManager.Instance.UpdateDisplayDamage();
+        UIManager.Instance.UpdateDisplayDamage(totalDamaged);
     }
 
     void Update()
