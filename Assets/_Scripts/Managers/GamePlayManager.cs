@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using NaughtyAttributes;
+using DG.Tweening;
 using Utils;
 
 public class GamePlayManager : MonoBehaviour
@@ -42,6 +43,8 @@ public class GamePlayManager : MonoBehaviour
     private EarthState earthState;
 
     private GameObject _playerPrefab;
+    [SerializeField] private SceneLoadingManager _sceneLoadingManager;
+    [SerializeField] private DataManager _DataManager;
 
     private EnemySpawner enemySpawner;
 
@@ -97,7 +100,15 @@ public class GamePlayManager : MonoBehaviour
     {
         isGameOver = true;
         UIManager.Instance.OnGameOver();
-        Debug.Log("GAME OVER");
+        _player.GetComponent<PlayerMovementController>().enabled = false;
+        PlayerPrefs.SetInt("totalKilled", enemySpawner.GetTotalKilled);
+        PlayerPrefs.SetInt("totalHealed", enemySpawner.GetTotalHealed);
+        PlayerPrefs.SetInt("totalDamage", enemySpawner.GetTotalDamage);
+
+
+        DOTween.Sequence()
+            .AppendInterval(2f)
+            .OnComplete(() => _sceneLoadingManager.OnLoadScene(3));
     }
 
     public void OnPlayerInstantiated(GameObject player)

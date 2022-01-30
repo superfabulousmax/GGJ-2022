@@ -13,9 +13,9 @@ public class EnemyManager
     private ObjectPool<EnemySeekController> _airEnemyPool;
     private GameObject _enemyHolder;
     private Enemies _enemies;
-    private int totalKilled;
-    private int totalHealed;
-    private int totalDamage;
+    public int totalKilled;
+    public int totalHealed;
+    public int totalDamage;
     public event Action<int> onKill = (int amount) => { };
     public event Action<int> onHeal = (int amount) => { };
     public event Action<int> onDamage = (int amount) => { };

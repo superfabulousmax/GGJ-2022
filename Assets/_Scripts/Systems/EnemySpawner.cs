@@ -31,6 +31,11 @@ public class EnemySpawner : MonoBehaviour
     private GameObject healVFX;
     private SoundFX sound;
     private bool isPressureMusicPlaying;
+
+    public int GetTotalKilled => enemyManager.totalKilled;
+    public int GetTotalHealed => enemyManager.totalHealed;
+    public int GetTotalDamage => enemyManager.totalDamage;
+
     public void Init(GamePlayManager gamePlayManager, GameObject player, GameObject fire, GameObject water, GameObject air, GameObject earth, GameObject heal, SoundFX sound)
     {
         timer = 0;
