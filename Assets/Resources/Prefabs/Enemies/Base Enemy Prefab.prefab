@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8694994434453494692}
   - component: {fileID: 64804712679006405}
   - component: {fileID: 8253422958467497389}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 8694994435135986880}
   - component: {fileID: 8694994435135986886}
   - component: {fileID: 5107887190351586956}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Base Enemy Prefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}

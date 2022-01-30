@@ -66,11 +66,6 @@ public class EnemySeekController : MonoBehaviour
             CalculateDamage(Elements.Fire);
         }
 
-        if (collision.gameObject.CompareTag("Secondary Fire Projectile"))
-        {
-            CalculateDamage(Elements.Fire, 2);
-        }
-
         if (collision.gameObject.CompareTag("Water Projectile"))
         {
             CalculateDamage(Elements.Water);
@@ -84,6 +79,15 @@ public class EnemySeekController : MonoBehaviour
         if (collision.gameObject.CompareTag("Air Projectile"))
         {
             CalculateDamage(Elements.Air);
+        }
+    }
+
+    void OnParticleCollision(GameObject other)
+    {
+        Debug.Log("Particle col");
+        if (other.CompareTag("Secondary Fire Projectile"))
+        {
+            CalculateDamage(Elements.Fire, 2);
         }
     }
 
