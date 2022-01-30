@@ -56,10 +56,10 @@ public class EnemyManager
         );
     }
 
-    public GameObject SpawnEnemy(Vector3 spawnPosition, Utils.Elements element)
+    public GameObject SpawnEnemy(Vector3 spawnPosition, Utils.Elements element, GameObject damageVFX)
     {
         var enemy = FromElement(element);
-        enemy.SpawnAndSeek(spawnPosition, _player.transform, element);
+        enemy.SpawnAndSeek(spawnPosition, _player.transform, element, damageVFX);
 
         return enemy.gameObject;
     }

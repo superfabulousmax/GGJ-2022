@@ -23,13 +23,21 @@ public class EnemySpawner : MonoBehaviour
     private float coolDown = 3;
     private GameObject _enemyHolder;
     private int sortingOrder = 0;
-    public void Init(GameObject player)
+    private GameObject fireDamageVFX;
+    private GameObject waterDamageVFX;
+    private GameObject airDamageVFX;
+    private GameObject earthDamageVFX;
+    public void Init(GameObject player, GameObject fire, GameObject water, GameObject air, GameObject earth)
     {
         timer = 0;
         formationPrefabs = Resources.LoadAll<GameObject>("Prefabs/Enemy Formations");
         _enemyHolder = GameObject.Instantiate(new GameObject());
         _camera = Camera.main;
         _player = player;
+        fireDamageVFX = fire;
+        waterDamageVFX = water;
+        airDamageVFX = air;
+        earthDamageVFX = earth;
         enemies = new Enemies() { };
         enemies.fireEnemy = Resources.Load<GameObject>($"{Constants.EnemiesFolder}Fire Enemy");
         enemies.waterEnemy = Resources.Load<GameObject>($"{Constants.EnemiesFolder}Water Enemy");
@@ -98,10 +106,21 @@ public class EnemySpawner : MonoBehaviour
         {
             var targetPos = trans.position;
             targetPos.z = 0;
-            var enemy = enemyManager.SpawnEnemy(targetPos, randomElement);
+            var enemy = enemyManager.SpawnEnemy(targetPos, randomElement, GetDamageVFX(randomElement));
             enemy.GetComponentInChildren<SpriteRenderer>().sortingOrder = sortingOrder;
             sortingOrder++;
         }
         GameObject.Destroy(formation);
+    }
+    
+    private GameObject GetDamageVFX(Elements element)
+    {
+        if (element == Elements.Fire)
+            return fireDamageVFX;
+        else if (element == Elements.Water)
+            return waterDamageVFX;
+        else if (element == Elements.Earth)
+            return earthDamageVFX;
+        return airDamageVFX;
     }
 }
