@@ -6,9 +6,18 @@ public abstract class AbilityState
 {
     public AbilitySet abilities;
     protected PlayerContext _context;
+    protected AudioClip _clip;
+    protected AudioSource _source;
+
     public void SetAbilities(AbilitySet abilities)
     {
         this.abilities = abilities;
+    }
+
+    public void SetAudio(AudioSource source, AudioClip clip)
+    {
+        _source = source;
+        _clip = clip;
     }
 
     public void SetContext(PlayerContext context)

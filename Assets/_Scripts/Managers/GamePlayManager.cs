@@ -148,6 +148,7 @@ public class GamePlayManager : MonoBehaviour
         fireState = new FireState();
         fireAbilitySet = new AbilitySet() { primary = primaryAbilities.fire, secondary = secondaryAbilities.fire };
         fireState.SetAbilities(fireAbilitySet);
+        fireState.SetAudio(sound.audioSource, sound.firePrimaryDamage);
     }
 
     private void InitWaterState()
@@ -155,18 +156,21 @@ public class GamePlayManager : MonoBehaviour
         waterState = new WaterState();
         waterAbilitySet= new AbilitySet() { primary = primaryAbilities.water, secondary = secondaryAbilities.water };
         waterState.SetAbilities(waterAbilitySet);
+        fireState.SetAudio(sound.audioSource, sound.waterPrimaryDamage);
     }
     private void InitEarthState()
     {
         earthState = new EarthState();
         earthAbilitySet = new AbilitySet() { primary = primaryAbilities.earth, secondary = secondaryAbilities.earth };
         earthState.SetAbilities(earthAbilitySet);
+        fireState.SetAudio(sound.audioSource, sound.earthPrimaryDamage);
     }
     private void InitAirState()
     {
         airState = new AirState();
         airAbilitySet = new AbilitySet() { primary = primaryAbilities.air, secondary = secondaryAbilities.air };
         airState.SetAbilities(airAbilitySet);
+        fireState.SetAudio(sound.audioSource, sound.airPrimaryDamage);
     }
 
     public void Update()
@@ -202,6 +206,10 @@ public class GamePlayManager : MonoBehaviour
         {
             changeAbility?.Invoke(earthAbilitySet, earthState);
             selectIcon?.Invoke(Elements.Earth);
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
         _playerContext.Handle();
     }

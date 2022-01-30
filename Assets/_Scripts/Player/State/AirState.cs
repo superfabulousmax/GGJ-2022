@@ -10,7 +10,7 @@ public class AirState : AbilityState
     private int buildUpKillNumber;
     private float primaryCoolDown;
     private float primaryTimer;
-    private const int maxHitCount = 5;
+    private const int maxHitCount = 7;
     private float secondaryCoolDown;
     private float secondaryTimer;
     private Transform fire;

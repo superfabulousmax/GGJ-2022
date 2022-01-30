@@ -14,7 +14,7 @@ public class FireState : AbilityState
     private float secondaryCoolDown;
     private float secondaryTimer;
     private float secondaryDuration;
-    private float primaryRadius = 1.25f;
+    private float primaryRadius = 1.5f;
     private Transform fire;
     private Collider2D playerCollider;
     private bool canShootPrimary;

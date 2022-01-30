@@ -20,7 +20,7 @@ public class EnemySeekController : MonoBehaviour
     private AudioClip secondaryDamage;
     private AudioClip heal;
     private EnemyManager enemyManager;
-    private const int fullPrimaryDamage = 40;
+    private const int fullPrimaryDamage = 50;
     private float damageFxTimer;
     private float healFxTimer;
     private const float fxCoolDown = 2;
