@@ -74,6 +74,9 @@ public class EarthState : AbilityState
 
     private void onPrimaryHit(Projectile projectile, EnemySeekController enemySeekController)
     {
+        var explosionVFX = GameObject.Instantiate(earthPrimary.Vfx);
+        explosionVFX.transform.position = projectile.transform.position;
+
         projectile.GetRigidbody.velocity = Vector2.zero;
         projectile.GetCollider.enabled = false;
 

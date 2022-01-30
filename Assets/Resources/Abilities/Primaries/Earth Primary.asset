@@ -15,8 +15,8 @@ MonoBehaviour:
   title: Earth Ball
   color: {r: 0, g: 0, b: 0, a: 0}
   sprite: {fileID: 0}
-  vfx: {fileID: 0}
+  vfx: {fileID: 6877515086023665132, guid: 49f213850d30ab344948e3c89cc3c14a, type: 3}
   sound: {fileID: 0}
   duration: 3
-  cooldown: {x: 0.3, y: 2}
+  cooldown: {x: 0.4, y: 2}
   projectile: {fileID: 11400000, guid: 3d576849e1b131d4686e0feb4041925b, type: 2}
