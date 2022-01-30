@@ -32,7 +32,15 @@ public class Projectile : MonoBehaviour, ICreateElement
         //}
         if(col.gameObject.TryGetComponent<EnemySeekController>(out var enemyController))
         {
-            Destroy(gameObject);
+            _rigidBody.velocity = Vector2.zero;
+            _collider.enabled = false;
+            var sprite = transform.Find("Sprite");
+            if (sprite != null)
+            {
+                sprite.gameObject.SetActive(false);
+            }
+
+            Destroy(gameObject, 0.5f);
         }
     }
 
