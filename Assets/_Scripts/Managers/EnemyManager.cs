@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Pool;
+using System;
 
 public class EnemyManager
 {
@@ -11,6 +12,9 @@ public class EnemyManager
     private ObjectPool<EnemySeekController> _airEnemyPool;
     private GameObject _enemyHolder;
     private Enemies _enemies;
+    private int totalKilled;
+    private int totalHealed;
+    private int totalDamage;
 
     public EnemyManager(GameObject player, Enemies enemies, GameObject enemyHolder)
     {
@@ -56,6 +60,23 @@ public class EnemyManager
         );
     }
 
+    public void OnKill(int amount)
+    {
+        totalKilled += amount;
+        Debug.Log($"Total Killed {totalKilled}");
+    }
+
+    public void OnDamage(int amount)
+    {
+        totalDamage += amount;
+        Debug.Log($"Total damaged {totalDamage}");
+    }
+    public void OnHeal(int amount)
+    {
+        totalHealed += amount;
+        Debug.Log($"Total healed {totalHealed}");
+    }
+
     public int GetTotalActiveEnemies()
     {
         return _fireEnemyPool.CountActive + _waterEnemyPool.CountActive + _earthEnemyPool.CountActive + _airEnemyPool.CountActive;
@@ -64,7 +85,7 @@ public class EnemyManager
     public GameObject SpawnEnemy(Vector3 spawnPosition, Utils.Elements element, GameObject damageVFX, GameObject healVFX)
     {
         var enemy = FromElement(element);
-        enemy.SpawnAndSeek(spawnPosition, _player.transform, element, damageVFX, healVFX);
+        enemy.SpawnAndSeek(this, spawnPosition, _player.transform, element, damageVFX, healVFX);
 
         return enemy.gameObject;
     }
