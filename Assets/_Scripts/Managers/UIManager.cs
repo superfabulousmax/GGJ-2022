@@ -33,20 +33,15 @@ public class UIManager : PersistentSingleton<UIManager>
         canvasPrefab = Resources.Load<GameObject>("Prefabs/Canvases");
         canvas = GameObject.Instantiate(canvasPrefab);
         gameOverText = canvas.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>();
-        //gameOverText.enabled = false;
-        GamePlayManager.Instance.onGameOver += OnGameOver;
+        gameOverText.enabled = false;
         iconContainer = canvas.transform.GetChild(0).GetChild(0);
         icons = iconContainer.GetComponentsInChildren<Transform>();
         outlines = icons.Select(icon => icon.GetComponent<Outline>()).Where(outline => outline != null).ToArray();
         SelectIcon(Elements.Fire);
     }
 
-    private void OnDisable()
-    {
-        GamePlayManager.Instance.onGameOver -= OnGameOver;
-    }
 
-    private void OnGameOver()
+    public void OnGameOver()
     {
         gameOverText.enabled = true;
     }
