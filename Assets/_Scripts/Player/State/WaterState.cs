@@ -56,6 +56,7 @@ public class WaterState : AbilityState
         }
         if (canShootPrimary && Input.GetKey(KeyCode.Mouse0))
         {
+            MakeShootSound();
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             var direction = (mousePos - (Vector2)_context.player.position);
             var lookAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -70,6 +71,13 @@ public class WaterState : AbilityState
 
             canShootPrimary = false;
             primaryTimer = 0;
+        }
+    }
+    private void MakeShootSound()
+    {
+        if (waterPrimary.Sound != null)
+        {
+            _context.audioSource.PlayOneShot(waterPrimary.Sound);
         }
     }
 

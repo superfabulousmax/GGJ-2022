@@ -8,8 +8,10 @@ public class PlayerContext
     private AbilityState _state = null;
     public Transform player;
     public GamePlayManager gamePlayManager;
-    public PlayerContext(AbilityState state, Transform player, GamePlayManager gamePlayManager)
+    public AudioSource audioSource;
+    public PlayerContext(AbilityState state, Transform player, GamePlayManager gamePlayManager, AudioSource audioSource)
     {
+        this.audioSource = audioSource;
         this.player = player;
         this.gamePlayManager = gamePlayManager;
         this.TransitionTo(state);

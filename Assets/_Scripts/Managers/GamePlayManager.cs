@@ -140,7 +140,7 @@ public class GamePlayManager : MonoBehaviour
     {
         if(_player == null)
             _player = Instantiate(_playerPrefab);
-        _playerContext = new PlayerContext(fireState, _player.transform, this);
+        _playerContext = new PlayerContext(fireState, _player.transform, this, sound.audioSource);
         onPlayerInstantiated?.Invoke(_player);
     }
 
