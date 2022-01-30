@@ -56,10 +56,15 @@ public class EnemyManager
         );
     }
 
-    public GameObject SpawnEnemy(Vector3 spawnPosition, Utils.Elements element, GameObject damageVFX)
+    public int GetTotalActiveEnemies()
+    {
+        return _fireEnemyPool.CountActive + _waterEnemyPool.CountActive + _earthEnemyPool.CountActive + _airEnemyPool.CountActive;
+    }
+
+    public GameObject SpawnEnemy(Vector3 spawnPosition, Utils.Elements element, GameObject damageVFX, GameObject healVFX)
     {
         var enemy = FromElement(element);
-        enemy.SpawnAndSeek(spawnPosition, _player.transform, element, damageVFX);
+        enemy.SpawnAndSeek(spawnPosition, _player.transform, element, damageVFX, healVFX);
 
         return enemy.gameObject;
     }

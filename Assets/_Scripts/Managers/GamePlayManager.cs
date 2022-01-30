@@ -30,6 +30,8 @@ public class GamePlayManager : MonoBehaviour
     private GameObject airDamageVFX;
     [SerializeField]
     private GameObject earthDamageVFX;
+    [SerializeField]
+    private GameObject healVFX;
     private PlayerContext _playerContext;
     private FireState fireState;
     private WaterState waterState;
@@ -176,6 +178,6 @@ public class GamePlayManager : MonoBehaviour
     {
         var spawnerObject = new GameObject("Enemy Spawner");
         enemySpawner = spawnerObject.AddComponent<EnemySpawner>();
-        enemySpawner.Init(_player, fireDamageVFX, waterDamageVFX, airDamageVFX, earthDamageVFX);
+        enemySpawner.Init(_player, fireDamageVFX, waterDamageVFX, airDamageVFX, earthDamageVFX, healVFX);
     }
 }
