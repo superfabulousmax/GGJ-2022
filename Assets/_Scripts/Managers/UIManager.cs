@@ -6,17 +6,24 @@ using UnityEngine.UI;
 using Utils;
 using System.Linq;
 
-[CreateAssetMenu(menuName = "Singletons/UIManagers", fileName = "UIManager")]
-public class UIManager : yaSingleton.Singleton<UIManager>
+public class UIManager : MonoBehaviour
 {
     private GameObject canvasPrefab;
     private GameObject canvas;
     private Transform iconContainer;
     private Transform [] icons;
     private Outline [] outlines;
-    protected override void Initialize()
+    public static UIManager Instance;
+
+    public void Awake()
     {
-        base.Initialize();
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
+    protected void Start()
+    {
 
         canvasPrefab = Resources.Load<GameObject>("Prefabs/Canvases");
         canvas = GameObject.Instantiate(canvasPrefab);
@@ -27,10 +34,6 @@ public class UIManager : yaSingleton.Singleton<UIManager>
         SelectIcon(Elements.Fire);
     }
 
-    protected override void Deinitialize()
-    {
-        base.Deinitialize();
-    }
 
     internal void SelectIcon(Elements obj)
     {
