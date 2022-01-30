@@ -77,6 +77,7 @@ public class FireState : AbilityState
 
         if (!secondaryActive && canShootPrimary && Input.GetKey(KeyCode.Mouse0))
         {
+            MakeShootSound();
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 direction = (mousePos - (Vector2)_context.player.position);
             var lookDirection = mousePos;
@@ -97,6 +98,14 @@ public class FireState : AbilityState
             {
                 EnableSecondary();
             }
+        }
+    }
+
+    private void MakeShootSound()
+    {
+        if(firePrimary.Sound != null)
+        {
+            _context.audioSource.PlayOneShot(firePrimary.Sound);
         }
     }
 

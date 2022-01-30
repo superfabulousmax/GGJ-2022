@@ -56,6 +56,7 @@ public class EarthState : AbilityState
         }
         if (canShootPrimary && Input.GetKey(KeyCode.Mouse0))
         {
+            MakeShootSound();
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 direction = (mousePos - (Vector2)_context.player.position);
             var lookDirection = mousePos;
@@ -69,6 +70,13 @@ public class EarthState : AbilityState
 
             canShootPrimary = false;
             primaryTimer = 0;
+        }
+    }
+    private void MakeShootSound()
+    {
+        if (earthPrimary.Sound != null)
+        {
+            _context.audioSource.PlayOneShot(earthPrimary.Sound);
         }
     }
 
