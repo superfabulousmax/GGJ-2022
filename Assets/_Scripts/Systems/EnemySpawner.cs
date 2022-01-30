@@ -65,6 +65,11 @@ public class EnemySpawner : MonoBehaviour
         return CountActive() < Constants.MaxEnemies;
     }
 
+    public bool UnderPressure()
+    {
+        return CountActive() > 10;
+    }
+
     private GameObject GetRandomFormation()
     {
         var index = Random.Range(0, formationPrefabs.Length);

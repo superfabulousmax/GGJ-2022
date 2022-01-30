@@ -32,6 +32,10 @@ public class GamePlayManager : MonoBehaviour
     private GameObject earthDamageVFX;
     [SerializeField]
     private GameObject healVFX;
+    [SerializeField]
+    private AudioClip normalAudio;
+    [SerializeField]
+    private AudioClip pressureAudio;
     private PlayerContext _playerContext;
     private FireState fireState;
     private WaterState waterState;

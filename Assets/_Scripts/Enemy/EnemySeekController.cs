@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,9 +16,14 @@ public class EnemySeekController : MonoBehaviour
     private Elements element;
     private GameObject damageVFX;
     private GameObject healVFX;
+    private EnemyManager enemyManager;
     private const int fullPrimaryDamage = 40;
     public Rigidbody2D GetRigidBody => _rigidBody;
     public Collider2D GetCollider => _collider;
+
+    public event Action<int> onKill;
+    public event Action<int> onHeal;
+    public event Action<int> onDamage;
 
     void Awake()
     {
@@ -25,14 +31,18 @@ public class EnemySeekController : MonoBehaviour
         _collider = GetComponent<Collider2D>();
     }
 
-    public void SpawnAndSeek(Vector3 spawnPosition, Transform playerTransform, Elements element, GameObject damageVFX, GameObject healVFX)
+    public void SpawnAndSeek(EnemyManager enemyManager, Vector3 spawnPosition, Transform playerTransform, Elements element, GameObject damageVFX, GameObject healVFX)
     {
+        this.enemyManager = enemyManager;
         transform.position = spawnPosition;
         _playerTarget = playerTransform;
         this.element = element;
         this.damageVFX = damageVFX;
         this.healVFX = healVFX;
         health = 100;
+        onKill = enemyManager.OnKill;
+        onHeal = enemyManager.OnHeal;
+        onDamage = enemyManager.OnDamage;
     }
 
     void FixedUpdate()
@@ -55,6 +65,7 @@ public class EnemySeekController : MonoBehaviour
         {
             CalculateDamage(Elements.Fire);
         }
+
         if (collision.gameObject.CompareTag("Secondary Fire Projectile"))
         {
             CalculateDamage(Elements.Fire, 2);
@@ -64,10 +75,12 @@ public class EnemySeekController : MonoBehaviour
         {
             CalculateDamage(Elements.Water);
         }
+
         if (collision.gameObject.CompareTag("Earth Projectile"))
         {
             CalculateDamage(Elements.Earth);
         }
+
         if (collision.gameObject.CompareTag("Air Projectile"))
         {
             CalculateDamage(Elements.Air);
@@ -78,23 +91,30 @@ public class EnemySeekController : MonoBehaviour
     {
         if(element == hitWith)
         {
-            health += fullPrimaryDamage * factor;
+            var amount = fullPrimaryDamage * factor;
+            health += amount;
             MakeHealVFX();
+            onHeal?.Invoke(amount);
 
         }
         else if(hitWith == GetOpposite())
         {
-            health -= fullPrimaryDamage * factor;
+            var amount = fullPrimaryDamage * factor;
+            health -= amount;
             MakeDamageVFX();
+            onDamage?.Invoke(-amount);
         }
         else
         {
-            health -= fullPrimaryDamage/2 * factor;
+            var amount = fullPrimaryDamage / 2 * factor;
+            health -= amount;
             MakeDamageVFX();
+            onDamage?.Invoke(-amount);
         }
         Mathf.Clamp(health, 0, 200);
         if(health <= 0)
         {
+            onKill?.Invoke(1);
             MakeDamageVFX();
             Destroy(gameObject);
         }
