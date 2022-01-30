@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(CircleCollider2D))]
@@ -8,6 +9,7 @@ public class Projectile : MonoBehaviour, ICreateElement
     private Rigidbody2D _rigidBody;
     private Collider2D _collider;
 
+    public event Action<Projectile, EnemySeekController> onPrimaryHitEnemy;
     public Collider2D GetCollider => _collider;
     public Rigidbody2D GetRigidbody => _rigidBody;
 
@@ -26,21 +28,9 @@ public class Projectile : MonoBehaviour, ICreateElement
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        //if(col.gameObject.TryGetComponent<ICreateElement>(out var element))
-        //{
-        //    return;
-        //}
-        if(col.gameObject.TryGetComponent<EnemySeekController>(out var enemyController))
+        if (col.gameObject.TryGetComponent(out EnemySeekController enemy))
         {
-            _rigidBody.velocity = Vector2.zero;
-            _collider.enabled = false;
-            var sprite = transform.Find("Sprite");
-            if (sprite != null)
-            {
-                sprite.gameObject.SetActive(false);
-            }
-
-            Destroy(gameObject, 0.5f);
+            onPrimaryHitEnemy?.Invoke(this, enemy);
         }
     }
 

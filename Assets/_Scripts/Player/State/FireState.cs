@@ -14,12 +14,14 @@ public class FireState : AbilityState
     private float secondaryCoolDown;
     private float secondaryTimer;
     private float secondaryDuration;
+    private float primaryRadius = 1.25f;
     private Transform fire;
     private Collider2D playerCollider;
     private bool canShootPrimary;
     private bool canShootSecondary;
     private bool secondaryActive;
     private FlameThrower flameThrower;
+
     public override void Enter()
     {
         this.firePrimary = abilities.primary as FireAbility;
@@ -72,7 +74,7 @@ public class FireState : AbilityState
             }
         }
 
-        if (!secondaryActive && canShootPrimary && Input.GetKeyDown(KeyCode.Mouse0))
+        if (!secondaryActive && canShootPrimary && Input.GetKey(KeyCode.Mouse0))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 direction = (mousePos - (Vector2)_context.player.position);
@@ -83,6 +85,8 @@ public class FireState : AbilityState
             GameObject.Instantiate(firePrimary.Projectile.ProjectilePrefab, _context.player.position, Quaternion.identity).TryGetComponent<Projectile>(out var projectile);
             Physics2D.IgnoreCollision(playerCollider, projectile.GetCollider);
             projectile.Instantiate(firePrimary.Projectile, direction, _context.player, fire);
+            projectile.onPrimaryHitEnemy += onPrimaryHit;
+
             canShootPrimary = false;
             primaryTimer = 0;
         }
@@ -128,6 +132,29 @@ public class FireState : AbilityState
         if (flameThrower != null)
         {
             GameObject.Destroy(flameThrower.gameObject);
+        }
+    }
+
+    private void onPrimaryHit(Projectile projectile, EnemySeekController enemySeekController)
+    {
+        projectile.GetRigidbody.velocity = Vector2.zero;
+        projectile.GetCollider.enabled = false;
+
+        var sprite = projectile.transform.Find("Sprite");
+        if (sprite != null)
+        {
+            sprite.gameObject.SetActive(false);
+        }
+
+        GameObject.Destroy(projectile.gameObject, 0.5f);
+
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(projectile.transform.position, primaryRadius);
+        foreach (var hitEnemy in hitColliders)
+        {
+            if (hitEnemy.TryGetComponent(out EnemySeekController hitEnemyController))
+            {
+                hitEnemyController.TakeDamage(Elements.Fire, 1);
+            }
         }
     }
 }
