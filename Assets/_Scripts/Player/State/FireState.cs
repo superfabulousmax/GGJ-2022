@@ -57,6 +57,7 @@ public class FireState : AbilityState
 
     public override void Handle()
     {
+        base.Handle();
         if(secondaryActive)
         {
             secondaryTimer += Time.deltaTime;

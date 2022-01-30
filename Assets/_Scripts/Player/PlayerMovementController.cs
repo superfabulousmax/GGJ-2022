@@ -26,6 +26,8 @@ public class PlayerMovementController : MonoBehaviour
 
     void Update()
     {
+        if (GamePlayManager.Instance.IsGameOver)
+            return;
         _moveAxis.x = Input.GetAxisRaw("Horizontal");
         _moveAxis.y = Input.GetAxisRaw("Vertical");
         _lookPosition = _camera.ScreenToWorldPoint(Input.mousePosition);
