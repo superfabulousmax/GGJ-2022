@@ -21,7 +21,7 @@ public class EnemySpawner : MonoBehaviour
     private GameObject _player;
     private Enemies enemies;
     private float timer;
-    private float coolDown = 3;
+    private float coolDown = 1.75;
     private GameObject _enemyHolder;
     private int sortingOrder = 0;
     private GameObject fireDamageVFX;

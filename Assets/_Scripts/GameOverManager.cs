@@ -8,7 +8,6 @@ public class GameOverManager : MonoBehaviour
     [SerializeField] private TMP_Text _totalKilled;
     [SerializeField] private TMP_Text _totalHealed;
     [SerializeField] private TMP_Text _totalDamage;
-    [SerializeField] private DataManager _dataManager;
     void Start()
     {
         _totalKilled.text = PlayerPrefs.GetInt("totalKilled").ToString();
