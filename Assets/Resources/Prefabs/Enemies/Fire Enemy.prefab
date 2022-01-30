@@ -10,7 +10,12 @@ PrefabInstance:
     - target: {fileID: 8694994435135986749, guid: c1fea51eeb5e03f46a6e23b9f9ae8b4a,
         type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: Fire Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8694994435135986880, guid: c1fea51eeb5e03f46a6e23b9f9ae8b4a,
+        type: 3}
+      propertyPath: m_BodyType
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8694994435135986883, guid: c1fea51eeb5e03f46a6e23b9f9ae8b4a,
         type: 3}
@@ -20,12 +25,12 @@ PrefabInstance:
     - target: {fileID: 8694994435135986883, guid: c1fea51eeb5e03f46a6e23b9f9ae8b4a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.21628097
       objectReference: {fileID: 0}
     - target: {fileID: 8694994435135986883, guid: c1fea51eeb5e03f46a6e23b9f9ae8b4a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.7899103
       objectReference: {fileID: 0}
     - target: {fileID: 8694994435135986883, guid: c1fea51eeb5e03f46a6e23b9f9ae8b4a,
         type: 3}
