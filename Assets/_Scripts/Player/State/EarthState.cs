@@ -10,7 +10,7 @@ public class EarthState : AbilityState
     private int buildUpKillNumber;
     private float primaryCoolDown;
     private float primaryTimer;
-    private float primaryRadius = 1.25f;
+    private float primaryRadius = 1.5f;
     private float secondaryCoolDown;
     private float secondaryTimer;
     private Transform fire;

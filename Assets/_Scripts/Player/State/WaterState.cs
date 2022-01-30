@@ -10,7 +10,7 @@ public class WaterState : AbilityState
     private int buildUpKillNumber;
     private float primaryCoolDown;
     private float primaryTimer;
-    private const int maxHitCount = 5;
+    private const int maxHitCount = 7;
     private float secondaryCoolDown;
     private float secondaryTimer;
     private Transform fire;
@@ -65,6 +65,8 @@ public class WaterState : AbilityState
             Physics2D.IgnoreCollision(playerCollider, projectile.GetComponent<Collider2D>());
             projectile.Instantiate(waterPrimary.Projectile, direction, _context.player, fire);
             projectile.onPrimaryHitEnemy += onPrimaryHit;
+
+            //_source.PlayOneShot(_clip);
 
             canShootPrimary = false;
             primaryTimer = 0;
