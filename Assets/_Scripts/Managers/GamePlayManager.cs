@@ -17,6 +17,7 @@ public class GamePlayManager : MonoBehaviour
     AbilitySet waterAbilitySet;
     AbilitySet airAbilitySet;
     AbilitySet earthAbilitySet;
+
     private AbilitySet currentAbilities;
 
     // Player
@@ -50,7 +51,21 @@ public class GamePlayManager : MonoBehaviour
     public event Action<GameObject> onPlayerInstantiated;
     public event Action<AbilitySet, AbilityState> changeAbility;
     public event Action<Elements> selectIcon;
+    private bool isGameOver;
+    public event Action onGameOver;
     public AbilitySet CurrentAbilities { get => currentAbilities; }
+    public bool IsGameOver { get => isGameOver; }
+
+    public static GamePlayManager Instance;
+
+
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+    }
 
     public void CallChangeAbilityEvent(AbilitySet abilities, AbilityState newState)
     {
@@ -64,6 +79,7 @@ public class GamePlayManager : MonoBehaviour
         changeAbility = CallChangeAbilityEvent;
         selectIcon = UIManager.Instance.SelectIcon;
         onPlayerInstantiated = OnPlayerInstantiated;
+        onGameOver = SetGameOver;
         currentAbilities = fireAbilitySet;
 
         // Load
@@ -77,9 +93,19 @@ public class GamePlayManager : MonoBehaviour
         SetupEnemy();
     }
 
+    private void SetGameOver()
+    {
+        isGameOver = true;
+    }
+
     public void OnPlayerInstantiated(GameObject player)
     {
 
+    }
+
+    internal void SendGameOver()
+    {
+        onGameOver?.Invoke();
     }
 
     private void LoadPrimaries()
@@ -144,13 +170,16 @@ public class GamePlayManager : MonoBehaviour
 
     public void Update()
     {
-        // fire
+        if (isGameOver)
+            return;
+        // todo select via scroll wheel y
         var y = Input.mouseScrollDelta.y;
         if(y != 0)
         {
 
         }
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        // fire
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             changeAbility?.Invoke(fireAbilitySet, fireState);
             selectIcon?.Invoke(Elements.Fire);
@@ -180,6 +209,6 @@ public class GamePlayManager : MonoBehaviour
     {
         var spawnerObject = new GameObject("Enemy Spawner");
         enemySpawner = spawnerObject.AddComponent<EnemySpawner>();
-        enemySpawner.Init(_player, fireDamageVFX, waterDamageVFX, airDamageVFX, earthDamageVFX, healVFX, sound);
+        enemySpawner.Init(this, _player, fireDamageVFX, waterDamageVFX, airDamageVFX, earthDamageVFX, healVFX, sound);
     }
 }

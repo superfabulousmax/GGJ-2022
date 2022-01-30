@@ -16,6 +16,7 @@ public class EnemySpawner : MonoBehaviour
 {
     private GameObject[] formationPrefabs;
     private Camera _camera;
+    private GamePlayManager gamePlayManager;
     private EnemyManager enemyManager;
     private GameObject _player;
     private Enemies enemies;
@@ -29,9 +30,8 @@ public class EnemySpawner : MonoBehaviour
     private GameObject earthDamageVFX;
     private GameObject healVFX;
     private SoundFX sound;
-
     private bool isPressureMusicPlaying;
-    public void Init(GameObject player, GameObject fire, GameObject water, GameObject air, GameObject earth, GameObject heal, SoundFX sound)
+    public void Init(GamePlayManager gamePlayManager, GameObject player, GameObject fire, GameObject water, GameObject air, GameObject earth, GameObject heal, SoundFX sound)
     {
         timer = 0;
         formationPrefabs = Resources.LoadAll<GameObject>("Prefabs/Enemy Formations");
@@ -55,6 +55,13 @@ public class EnemySpawner : MonoBehaviour
         enemyManager.onDamage += OnDamage;
         enemyManager.onHeal += OnHeal;
         enemyManager.onKill += OnKill;
+        this.gamePlayManager = gamePlayManager;
+        gamePlayManager.onGameOver += OnGameOver;
+    }
+
+    private void OnGameOver()
+    {
+        throw new NotImplementedException();
     }
 
     private void OnKill(int totalKilled)
@@ -74,6 +81,8 @@ public class EnemySpawner : MonoBehaviour
 
     void Update()
     {
+        if (gamePlayManager.IsGameOver)
+            return;
         timer += Time.deltaTime;
         if(CanSpawnMore() && timer >= coolDown)
         {
@@ -110,8 +119,6 @@ public class EnemySpawner : MonoBehaviour
             var normalSoundInfo = new Sound() { clip = sound.normalAudio, source = sound.audioSource, volume = sound.audioSource.volume, loop = sound.audioSource.loop };
             var fadeIn = AudioFader.FadeIn(pressureSoundInfo, 3, Mathf.SmoothStep);
             StartCoroutine(AudioFader.FadeOut(normalSoundInfo, 2, Mathf.SmoothStep, fadeIn));
-            //sound.audioSource.clip = sound.pressureAudio;
-            //sound.audioSource.Play();
         }
     }
 
@@ -124,9 +131,6 @@ public class EnemySpawner : MonoBehaviour
             var normalSoundInfo = new Sound() { clip = sound.normalAudio, source = sound.audioSource, volume = sound.audioSource.volume, loop = sound.audioSource.loop };
             var fadeIn = AudioFader.FadeIn(normalSoundInfo, 3, Mathf.SmoothStep);
             StartCoroutine(AudioFader.FadeOut(pressureSoundInfo, 2, Mathf.SmoothStep, fadeIn));
-            //sound.audioSource.Stop();
-            //sound.audioSource.clip = sound.normalAudio;
-            //sound.audioSource.Play();
         }
     }
 
