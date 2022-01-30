@@ -131,9 +131,10 @@ public class EnemySeekController : MonoBehaviour
         {
             onKill?.Invoke(1);
             MakeDamageVFX();
-            Destroy(gameObject);
+            ReleaseResource();
         }
     }
+
 
     private void MakeDamageVFX()
     {
@@ -185,6 +186,12 @@ public class EnemySeekController : MonoBehaviour
             return Elements.Earth;
         return Elements.Air;
     }
+
+    private void ReleaseResource()
+    {
+        enemyManager.ReleaseElement(element, this);
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.TryGetComponent(out EnemySeekController enemyController))
