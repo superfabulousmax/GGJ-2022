@@ -33,8 +33,8 @@ public class EnemyManager
             actionOnRelease: enemy => enemy.gameObject.SetActive(false),
             actionOnDestroy: enemy => GameObject.Destroy(enemy),
             collectionCheck: false,
-            defaultCapacity: Utils.Constants.MaxEnemies/4,
-            maxSize: Utils.Constants.MaxEnemies/4
+            defaultCapacity: Constants.MaxEnemies/4,
+            maxSize: Constants.MaxEnemies/4
         );
 
         _waterEnemyPool = new ObjectPool<EnemySeekController>(
@@ -43,8 +43,8 @@ public class EnemyManager
             actionOnRelease: enemy => enemy.gameObject.SetActive(false),
             actionOnDestroy: enemy => GameObject.Destroy(enemy),
             collectionCheck: false,
-            defaultCapacity: Utils.Constants.MaxEnemies/4,
-            maxSize: Utils.Constants.MaxEnemies/4
+            defaultCapacity: Constants.MaxEnemies/4,
+            maxSize: Constants.MaxEnemies/4
         );
         _earthEnemyPool = new ObjectPool<EnemySeekController>(
             createFunc: () => GameObject.Instantiate(_enemies.earthEnemy, _enemyHolder.transform).GetComponent<EnemySeekController>(),
@@ -52,8 +52,8 @@ public class EnemyManager
             actionOnRelease: enemy => enemy.gameObject.SetActive(false),
             actionOnDestroy: enemy => GameObject.Destroy(enemy),
             collectionCheck: false,
-            defaultCapacity: Utils.Constants.MaxEnemies/4,
-            maxSize: Utils.Constants.MaxEnemies/4
+            defaultCapacity: Constants.MaxEnemies/4,
+            maxSize: Constants.MaxEnemies/4
         );
         _airEnemyPool = new ObjectPool<EnemySeekController>(
             createFunc: () => GameObject.Instantiate(_enemies.airEnemy, _enemyHolder.transform).GetComponent<EnemySeekController>(),
@@ -61,8 +61,8 @@ public class EnemyManager
             actionOnRelease: enemy => enemy.gameObject.SetActive(false),
             actionOnDestroy: enemy => GameObject.Destroy(enemy),
             collectionCheck: false,
-            defaultCapacity: Utils.Constants.MaxEnemies / 4,
-            maxSize: Utils.Constants.MaxEnemies / 4
+            defaultCapacity: Constants.MaxEnemies / 4,
+            maxSize: Constants.MaxEnemies / 4
         );
     }
 
@@ -148,6 +148,27 @@ public class EnemyManager
                 return _airEnemyPool.Get();
             default:
                 return null;
+        }
+    }
+
+    internal void ReleaseElement(Elements element, EnemySeekController enemySeekController)
+    {
+        switch (element)
+        {
+            case Elements.Fire:
+                 _fireEnemyPool.Release(enemySeekController);
+                break;
+            case Elements.Water:
+                _waterEnemyPool.Release(enemySeekController);
+                break;
+            case Elements.Earth:
+                _earthEnemyPool.Release(enemySeekController);
+                break;
+            case Elements.Air:
+                _airEnemyPool.Release(enemySeekController);
+                break;
+            default:
+                break;
         }
     }
 }

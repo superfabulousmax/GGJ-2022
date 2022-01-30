@@ -29,6 +29,8 @@ public class EnemySpawner : MonoBehaviour
     private GameObject earthDamageVFX;
     private GameObject healVFX;
     private SoundFX sound;
+
+    private bool isPressureMusicPlaying;
     public void Init(GameObject player, GameObject fire, GameObject water, GameObject air, GameObject earth, GameObject heal, SoundFX sound)
     {
         timer = 0;
@@ -42,6 +44,7 @@ public class EnemySpawner : MonoBehaviour
         earthDamageVFX = earth;
         healVFX = heal;
         this.sound = sound;
+        isPressureMusicPlaying = false;
         enemies = new Enemies() { };
         enemies.fireEnemy = Resources.Load<GameObject>($"{Constants.EnemiesFolder}Fire Enemy");
         enemies.waterEnemy = Resources.Load<GameObject>($"{Constants.EnemiesFolder}Water Enemy");
@@ -77,16 +80,47 @@ public class EnemySpawner : MonoBehaviour
             SpawnFormation();
             timer = 0;
         }
+
+        if(!isPressureMusicPlaying && UnderPressure())
+        {
+            PlayPressureMusic();
+        }
+        else if(isPressureMusicPlaying && !UnderPressure())
+        {
+            PlayNormalMusic();
+        }
     }
 
     private bool CanSpawnMore()
     {
-        return CountActive() < Constants.MaxEnemies;
+        return CountActive() < Constants.MaxEnemies - 10;
     }
 
     public bool UnderPressure()
     {
-        return CountActive() > 10;
+        return CountActive() > 40;
+    }
+
+    public void PlayPressureMusic()
+    {
+        isPressureMusicPlaying = true;
+        if(sound.audioSource != null)
+        {
+            sound.audioSource.Stop();
+            sound.audioSource.clip = sound.pressureAudio;
+            sound.audioSource.Play();
+        }
+    }
+
+    public void PlayNormalMusic()
+    {
+        isPressureMusicPlaying = false;
+        if (sound.audioSource != null)
+        {
+            sound.audioSource.Stop();
+            sound.audioSource.clip = sound.normalAudio;
+            sound.audioSource.Play();
+        }
     }
 
     private GameObject GetRandomFormation()
