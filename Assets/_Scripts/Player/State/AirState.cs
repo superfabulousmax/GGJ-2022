@@ -48,6 +48,7 @@ public class AirState : AbilityState
 
     public override void Handle()
     {
+        base.Handle();
         primaryTimer += Time.deltaTime;
         if (primaryTimer >= primaryCoolDown)
         {
