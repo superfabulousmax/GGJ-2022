@@ -99,6 +99,11 @@ public class EnemySeekController : MonoBehaviour
         }
     }
 
+    public void TakeDamage(Elements hitType, int factor = 1)
+    {
+        CalculateDamage(hitType, factor);
+    }
+
     private void CalculateDamage(Elements hitWith, int factor = 1)
     {
         if(element == hitWith)

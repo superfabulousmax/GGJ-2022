@@ -11,6 +11,13 @@ public class FireAbility : Ability
         this.gameObject = gameObject;
     }
 
-    public override void TriggerAbility() { }
-    public override void EndAbility() {}
+    public override void TriggerAbility() 
+    {
+
+    }
+
+    public override void EndAbility()
+    {
+
+    }
 }
