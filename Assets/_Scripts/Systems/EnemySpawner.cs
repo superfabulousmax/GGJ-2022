@@ -28,7 +28,8 @@ public class EnemySpawner : MonoBehaviour
     private GameObject airDamageVFX;
     private GameObject earthDamageVFX;
     private GameObject healVFX;
-    public void Init(GameObject player, GameObject fire, GameObject water, GameObject air, GameObject earth, GameObject heal)
+    private SoundFX sound;
+    public void Init(GameObject player, GameObject fire, GameObject water, GameObject air, GameObject earth, GameObject heal, SoundFX sound)
     {
         timer = 0;
         formationPrefabs = Resources.LoadAll<GameObject>("Prefabs/Enemy Formations");
@@ -40,13 +41,14 @@ public class EnemySpawner : MonoBehaviour
         airDamageVFX = air;
         earthDamageVFX = earth;
         healVFX = heal;
+        this.sound = sound;
         enemies = new Enemies() { };
         enemies.fireEnemy = Resources.Load<GameObject>($"{Constants.EnemiesFolder}Fire Enemy");
         enemies.waterEnemy = Resources.Load<GameObject>($"{Constants.EnemiesFolder}Water Enemy");
         enemies.airEnemy = Resources.Load<GameObject>($"{Constants.EnemiesFolder}Air Enemy");
         enemies.earthEnemy = Resources.Load<GameObject>($"{Constants.EnemiesFolder}Earth Enemy");
        
-        enemyManager = new EnemyManager(_player, enemies, _enemyHolder);
+        enemyManager = new EnemyManager(_player, enemies, _enemyHolder, sound);
         enemyManager.onDamage += OnDamage;
         enemyManager.onHeal += OnHeal;
         enemyManager.onKill += OnKill;

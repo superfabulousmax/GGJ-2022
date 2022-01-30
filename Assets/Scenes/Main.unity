@@ -277,6 +277,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 560148383}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &560148385 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4397057497887323127, guid: 6f1e3e9b715be9f498e5e81c4015301c,
+    type: 3}
+  m_PrefabInstance: {fileID: 560148383}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &645721346
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,8 +658,15 @@ MonoBehaviour:
   earthDamageVFX: {fileID: 958378468428849944, guid: e47a46e00fecc0f44b6bb2f2d0a438c2,
     type: 3}
   healVFX: {fileID: 1375175134864340920, guid: 205902bc601505a4aa63c60b0728ba5b, type: 3}
-  normalAudio: {fileID: 8300000, guid: fdb35ea32dfb69e44acc81da89ef4f05, type: 3}
-  pressureAudio: {fileID: 8300000, guid: fcd2f7761535d5b4fa23402bb8cc410a, type: 3}
+  sound:
+    audioSource: {fileID: 560148385}
+    normalAudio: {fileID: 8300000, guid: fdb35ea32dfb69e44acc81da89ef4f05, type: 3}
+    pressureAudio: {fileID: 8300000, guid: fcd2f7761535d5b4fa23402bb8cc410a, type: 3}
+    fireDamage: {fileID: 0}
+    waterDamage: {fileID: 0}
+    airDamage: {fileID: 0}
+    earthDamage: {fileID: 0}
+    heal: {fileID: 0}
 --- !u!1 &1727938692
 GameObject:
   m_ObjectHideFlags: 0

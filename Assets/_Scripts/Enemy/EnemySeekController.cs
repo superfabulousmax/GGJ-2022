@@ -16,8 +16,13 @@ public class EnemySeekController : MonoBehaviour
     private Elements element;
     private GameObject damageVFX;
     private GameObject healVFX;
+    private AudioClip primaryDamage;
+    private AudioClip secondaryDamage;
+    private AudioClip heal;
     private EnemyManager enemyManager;
     private const int fullPrimaryDamage = 40;
+
+    private AudioSource _audioSource;
     public Rigidbody2D GetRigidBody => _rigidBody;
     public Collider2D GetCollider => _collider;
 
@@ -31,7 +36,7 @@ public class EnemySeekController : MonoBehaviour
         _collider = GetComponent<Collider2D>();
     }
 
-    public void SpawnAndSeek(EnemyManager enemyManager, Vector3 spawnPosition, Transform playerTransform, Elements element, GameObject damageVFX, GameObject healVFX)
+    public void SpawnAndSeek(EnemyManager enemyManager, Vector3 spawnPosition, Transform playerTransform, Elements element, GameObject damageVFX, GameObject healVFX, AudioSource audioSource, AudioClip primaryDamage, AudioClip secondaryDamage, AudioClip heal)
     {
         this.enemyManager = enemyManager;
         transform.position = spawnPosition;
@@ -39,6 +44,10 @@ public class EnemySeekController : MonoBehaviour
         this.element = element;
         this.damageVFX = damageVFX;
         this.healVFX = healVFX;
+        _audioSource = audioSource;
+        this.primaryDamage = primaryDamage;
+        this.secondaryDamage = secondaryDamage;
+        this.heal = heal;
         health = 100;
         onKill = enemyManager.OnKill;
         onHeal = enemyManager.OnHeal;
@@ -84,7 +93,6 @@ public class EnemySeekController : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-        Debug.Log("Particle col");
         if (other.CompareTag("Secondary Fire Projectile"))
         {
             CalculateDamage(Elements.Fire, 2);
@@ -98,6 +106,7 @@ public class EnemySeekController : MonoBehaviour
             var amount = fullPrimaryDamage * factor;
             health += amount;
             MakeHealVFX();
+            PlayHealSFX();
             onHeal?.Invoke(amount);
 
         }
@@ -106,6 +115,7 @@ public class EnemySeekController : MonoBehaviour
             var amount = fullPrimaryDamage * factor;
             health -= amount;
             MakeDamageVFX();
+            PlayDamageSFX(factor);
             onDamage?.Invoke(amount);
         }
         else
@@ -113,6 +123,7 @@ public class EnemySeekController : MonoBehaviour
             var amount = fullPrimaryDamage / 2 * factor;
             health -= amount;
             MakeDamageVFX();
+            PlayDamageSFX(factor);
             onDamage?.Invoke(amount);
         }
         Mathf.Clamp(health, 0, 200);
@@ -138,6 +149,30 @@ public class EnemySeekController : MonoBehaviour
             return;
         var heal = Instantiate(healVFX, transform.position, Quaternion.identity);
         Destroy(heal, 1);
+    }
+
+    private void PlayDamageSFX(int amount)
+    {
+        if(amount > 1)
+        {
+            if (secondaryDamage == null)
+                return;
+            _audioSource?.PlayOneShot(secondaryDamage);
+        }
+        else
+        {
+            if (primaryDamage == null)
+                return;
+            _audioSource?.PlayOneShot(primaryDamage);
+        }
+
+    }
+
+    private void PlayHealSFX()
+    {
+        if (heal == null)
+            return;
+        _audioSource?.PlayOneShot(heal);
     }
 
     private Elements GetOpposite()
