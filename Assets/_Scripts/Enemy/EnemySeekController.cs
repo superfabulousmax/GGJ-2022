@@ -23,7 +23,7 @@ public class EnemySeekController : MonoBehaviour
     private const int fullPrimaryDamage = 50;
     private float damageFxTimer;
     private float healFxTimer;
-    private const float fxCoolDown = 2;
+    private const float fxCoolDown = 0.4f;
     private const float healFxCoolDown = 0.2f;
     private AudioSource _audioSource;
     public Rigidbody2D GetRigidBody => _rigidBody;
@@ -53,6 +53,7 @@ public class EnemySeekController : MonoBehaviour
         this.heal = heal;
         health = 100;
         damageFxTimer = 0;
+        healFxTimer = 0;
         onKill = enemyManager.OnKill;
         onHeal = enemyManager.OnHeal;
         onDamage = enemyManager.OnDamage;
@@ -150,21 +151,10 @@ public class EnemySeekController : MonoBehaviour
             onKill?.Invoke(1);
             MakeDamageVFX();
             ReleaseResource();
-            damageFxTimer = 0;
         }
     }
 
 
-    private void MakeDamageVFX()
-    {
-        if (damageVFX == null)
-            return;
-        if (damageFxTimer >= fxCoolDown)
-        {
-            var damage = Instantiate(damageVFX, transform.position, Quaternion.identity);
-            Destroy(damage, 1);
-        }
-    }
 
     private void MakeHealVFX()
     {
@@ -177,13 +167,35 @@ public class EnemySeekController : MonoBehaviour
         }
     }
 
+    private void PlayHealSFX()
+    {
+        if (heal == null)
+            return;
+        if (healFxTimer >= fxCoolDown)
+        {
+            _audioSource?.PlayOneShot(heal);
+        }
+
+    }
+
+    private void MakeDamageVFX()
+    {
+        if (damageVFX == null)
+            return;
+        if (damageFxTimer >= fxCoolDown)
+        {
+            var damage = Instantiate(damageVFX, transform.position, Quaternion.identity);
+            Destroy(damage, 1);
+        }
+    }
+
     private void PlayDamageSFX(int amount)
     {
         if(amount > 1)
         {
             if (secondaryDamage == null)
                 return;
-            if(damageFxTimer >= fxCoolDown)
+            if(damageFxTimer >= fxCoolDown * 2)
             {
                 _audioSource?.PlayOneShot(secondaryDamage);
             }
@@ -200,16 +212,6 @@ public class EnemySeekController : MonoBehaviour
 
     }
 
-    private void PlayHealSFX()
-    {
-        if (heal == null)
-            return;
-        if (healFxTimer >= fxCoolDown)
-        {
-            _audioSource?.PlayOneShot(heal);
-        }
-
-    }
 
     private Elements GetOpposite()
     {
