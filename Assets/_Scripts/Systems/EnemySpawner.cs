@@ -22,6 +22,7 @@ public class EnemySpawner : MonoBehaviour
     private float timer;
     private float coolDown = 3;
     private GameObject _enemyHolder;
+    private int sortingOrder = 0;
     public void Init(GameObject player)
     {
         timer = 0;
@@ -98,6 +99,8 @@ public class EnemySpawner : MonoBehaviour
             var targetPos = trans.position;
             targetPos.z = 0;
             var enemy = enemyManager.SpawnEnemy(targetPos, randomElement);
+            enemy.GetComponentInChildren<SpriteRenderer>().sortingOrder = sortingOrder;
+            sortingOrder++;
         }
         GameObject.Destroy(formation);
     }

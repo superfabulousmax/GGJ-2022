@@ -5,6 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - Icons
+  - Air Projectile
+  - Earth Projectile
+  - Water Projectile
+  - Fire Projectile
+  - Secondary Fire Projectile
+  - Secondary Water Projectile
+  - Secondary Air Projectile
+  - Secondary Earth Projectile
   layers:
   - Default
   - TransparentFX

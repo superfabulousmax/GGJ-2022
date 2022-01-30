@@ -45,6 +45,7 @@ public class FireState : AbilityState
 
     public override void Exit()
     {
+        DisableSecondary();
         buildUpKillNumber = 0;
         primaryTimer = 0;
         secondaryTimer = 0;

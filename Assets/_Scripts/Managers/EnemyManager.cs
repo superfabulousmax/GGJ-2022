@@ -59,7 +59,7 @@ public class EnemyManager
     public GameObject SpawnEnemy(Vector3 spawnPosition, Utils.Elements element)
     {
         var enemy = FromElement(element);
-        enemy.SpawnAndSeek(spawnPosition, _player.transform);
+        enemy.SpawnAndSeek(spawnPosition, _player.transform, element);
 
         return enemy.gameObject;
     }
