@@ -102,14 +102,14 @@ public class EnemySeekController : MonoBehaviour
             var amount = fullPrimaryDamage * factor;
             health -= amount;
             MakeDamageVFX();
-            onDamage?.Invoke(-amount);
+            onDamage?.Invoke(amount);
         }
         else
         {
             var amount = fullPrimaryDamage / 2 * factor;
             health -= amount;
             MakeDamageVFX();
-            onDamage?.Invoke(-amount);
+            onDamage?.Invoke(amount);
         }
         Mathf.Clamp(health, 0, 200);
         if(health <= 0)

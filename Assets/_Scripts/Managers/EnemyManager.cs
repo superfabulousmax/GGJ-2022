@@ -15,6 +15,10 @@ public class EnemyManager
     private int totalKilled;
     private int totalHealed;
     private int totalDamage;
+    public event Action<int> onKill = (int amount) => { };
+    public event Action<int> onHeal = (int amount) => { };
+    public event Action<int> onDamage = (int amount) => { };
+
 
     public EnemyManager(GameObject player, Enemies enemies, GameObject enemyHolder)
     {
@@ -63,17 +67,20 @@ public class EnemyManager
     public void OnKill(int amount)
     {
         totalKilled += amount;
+        onKill?.Invoke(totalKilled);
         Debug.Log($"Total Killed {totalKilled}");
     }
 
     public void OnDamage(int amount)
     {
         totalDamage += amount;
+        onDamage?.Invoke(totalDamage);
         Debug.Log($"Total damaged {totalDamage}");
     }
     public void OnHeal(int amount)
     {
         totalHealed += amount;
+        onHeal?.Invoke(totalHealed);
         Debug.Log($"Total healed {totalHealed}");
     }
 
