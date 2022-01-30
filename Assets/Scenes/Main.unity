@@ -663,19 +663,19 @@ MonoBehaviour:
     audioSource: {fileID: 560148385}
     normalAudio: {fileID: 8300000, guid: fdb35ea32dfb69e44acc81da89ef4f05, type: 3}
     pressureAudio: {fileID: 8300000, guid: fcd2f7761535d5b4fa23402bb8cc410a, type: 3}
-    firePrimaryDamage: {fileID: 8300000, guid: 518c15c18b88fde47adb0afa57684459, type: 3}
-    waterPrimaryDamage: {fileID: 8300000, guid: 46cf685e81d070a4abee5a5bac729fb7,
+    firePrimaryDamage: {fileID: 8300000, guid: 240a7d2e6cfeec046bbaf5b2552aaf6b, type: 3}
+    waterPrimaryDamage: {fileID: 8300000, guid: bc8bcdc8a8a529b4cb3c4f04fa639e30,
       type: 3}
-    airPrimaryDamage: {fileID: 8300000, guid: b57cc06f6fea04d4c9edd533fe70cf48, type: 3}
-    earthPrimaryDamage: {fileID: 8300000, guid: 6cd3c96e09eb6c241af55a96deb7fcf2,
+    airPrimaryDamage: {fileID: 8300000, guid: e0b2b325b33f417498db6289f48b4957, type: 3}
+    earthPrimaryDamage: {fileID: 8300000, guid: 4e96c13acefa6c146a816ca8e5ac3ef3,
       type: 3}
-    fireSecondaryDamage: {fileID: 8300000, guid: a29d5953b1b8d6f4ebc4cdb93dc21511,
+    fireSecondaryDamage: {fileID: 8300000, guid: 536153fc87a737142a01f2f4eff8cae8,
       type: 3}
-    waterSecondaryDamage: {fileID: 8300000, guid: 15826c519aea54247a888900fa35dbf6,
+    waterSecondaryDamage: {fileID: 8300000, guid: 0846b9b975c9911418a0bb6148776551,
       type: 3}
-    airSecondaryDamage: {fileID: 8300000, guid: d47a9cee3fd188d44a13180d09f4f820,
+    airSecondaryDamage: {fileID: 8300000, guid: 4ca3b653bc3b65f4eb0b3db329e82459,
       type: 3}
-    earthSecondaryDamage: {fileID: 8300000, guid: 7858afa07d538cf4d987c03c6cf8ba20,
+    earthSecondaryDamage: {fileID: 8300000, guid: fecd8406da1f6b446bff2296a5863ec4,
       type: 3}
     heal: {fileID: 8300000, guid: 5a537468197e881459eb77b9e73fd011, type: 3}
 --- !u!114 &1182088845
