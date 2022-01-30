@@ -48,4 +48,19 @@ public class UIManager : MonoBehaviour
             outlines[i].enabled = false;
         }
     }
+
+    internal void UpdateDisplayDamage()
+    {
+        // todo
+    }
+
+    internal void UpdateDisplayHeals()
+    {
+        // todo
+    }
+
+    internal void UpdateDisplayKills()
+    {
+        // todo
+    }
 }

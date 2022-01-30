@@ -47,8 +47,25 @@ public class EnemySpawner : MonoBehaviour
         enemies.earthEnemy = Resources.Load<GameObject>($"{Constants.EnemiesFolder}Earth Enemy");
        
         enemyManager = new EnemyManager(_player, enemies, _enemyHolder);
+        enemyManager.onDamage += OnDamage;
+        enemyManager.onHeal += OnHeal;
+        enemyManager.onKill += OnKill;
     }
 
+    private void OnKill(int totalKilled)
+    {
+        UIManager.Instance.UpdateDisplayKills();
+    }
+
+    private void OnHeal(int totalHealed)
+    {
+        UIManager.Instance.UpdateDisplayHeals();
+    }
+
+    private void OnDamage(int totalDamaged)
+    {
+        UIManager.Instance.UpdateDisplayDamage();
+    }
 
     void Update()
     {
