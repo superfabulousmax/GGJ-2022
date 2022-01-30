@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
 public class AirState : AbilityState
 {
@@ -9,6 +10,7 @@ public class AirState : AbilityState
     private int buildUpKillNumber;
     private float primaryCoolDown;
     private float primaryTimer;
+    private const int maxHitCount = 5;
     private float secondaryCoolDown;
     private float secondaryTimer;
     private Transform fire;
@@ -51,7 +53,7 @@ public class AirState : AbilityState
         {
             canShootPrimary = true;
         }
-        if (canShootPrimary && Input.GetKeyDown(KeyCode.Mouse0))
+        if (canShootPrimary && Input.GetKey(KeyCode.Mouse0))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 direction = (mousePos - (Vector2)_context.player.position);
@@ -61,8 +63,33 @@ public class AirState : AbilityState
             GameObject.Instantiate(airPrimary.Projectile.ProjectilePrefab, _context.player.position, fire.rotation).TryGetComponent<Projectile>(out var projectile);
             Physics2D.IgnoreCollision(playerCollider, projectile.GetComponent<Collider2D>());
             projectile.Instantiate(airPrimary.Projectile, direction, _context.player, fire);
+            projectile.onPrimaryHitEnemy += onPrimaryHit;
+
             canShootPrimary = false;
             primaryTimer = 0;
+        }
+    }
+
+    private void onPrimaryHit(Projectile projectile, EnemySeekController enemySeekController)
+    {
+        projectile.hitCount++;
+        projectile.KeepVelocity();
+        Physics2D.IgnoreCollision(projectile.GetCollider, enemySeekController.GetCollider);
+        enemySeekController.TakeDamage(Elements.Air, 1);
+
+        if (projectile.hitCount > maxHitCount)
+        {
+            GameObject.Destroy(projectile.gameObject, 0.5f);
+            projectile.GetRigidbody.velocity = Vector2.zero;
+            projectile.GetCollider.enabled = false;
+
+            var sprite = projectile.transform.Find("Sprite");
+            if (sprite != null)
+            {
+                sprite.gameObject.SetActive(false);
+            }
+
+            projectile.onPrimaryHitEnemy -= onPrimaryHit;
         }
     }
 }

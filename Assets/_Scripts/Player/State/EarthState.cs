@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
 public class EarthState : AbilityState
 {
@@ -9,6 +10,7 @@ public class EarthState : AbilityState
     private int buildUpKillNumber;
     private float primaryCoolDown;
     private float primaryTimer;
+    private float primaryRadius = 1.25f;
     private float secondaryCoolDown;
     private float secondaryTimer;
     private Transform fire;
@@ -51,7 +53,7 @@ public class EarthState : AbilityState
         {
             canShootPrimary = true;
         }
-        if (canShootPrimary && Input.GetKeyDown(KeyCode.Mouse0))
+        if (canShootPrimary && Input.GetKey(KeyCode.Mouse0))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 direction = (mousePos - (Vector2)_context.player.position);
@@ -62,8 +64,34 @@ public class EarthState : AbilityState
             GameObject.Instantiate(earthPrimary.Projectile.ProjectilePrefab, _context.player.position, Quaternion.identity).TryGetComponent<Projectile>(out var projectile);
             Physics2D.IgnoreCollision(playerCollider, projectile.GetComponent<Collider2D>());
             projectile.Instantiate(earthPrimary.Projectile, direction, _context.player, fire);
+            projectile.onPrimaryHitEnemy += onPrimaryHit;
+
             canShootPrimary = false;
             primaryTimer = 0;
+        }
+    }
+
+    private void onPrimaryHit(Projectile projectile, EnemySeekController enemySeekController)
+    {
+        projectile.GetRigidbody.velocity = Vector2.zero;
+        projectile.GetCollider.enabled = false;
+
+        var sprite = projectile.transform.Find("Sprite");
+        if (sprite != null)
+        {
+            sprite.gameObject.SetActive(false);
+        }
+
+        projectile.onPrimaryHitEnemy -= onPrimaryHit;
+        GameObject.Destroy(projectile.gameObject, 0.5f);
+
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(projectile.transform.position, primaryRadius);
+        foreach (var hitEnemy in hitColliders)
+        {
+            if (hitEnemy.TryGetComponent(out EnemySeekController hitEnemyController))
+            {
+                hitEnemyController.TakeDamage(Elements.Earth, 1);
+            }
         }
     }
 }
