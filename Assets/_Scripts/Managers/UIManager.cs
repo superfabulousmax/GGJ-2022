@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Utils;
 using System.Linq;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class UIManager : MonoBehaviour
     private Transform iconContainer;
     private Transform [] icons;
     private Outline [] outlines;
+    private TMP_Text gameOverText;
     public static UIManager Instance;
 
     public void Awake()
@@ -24,16 +26,27 @@ public class UIManager : MonoBehaviour
     }
     protected void Start()
     {
-
+        
         canvasPrefab = Resources.Load<GameObject>("Prefabs/Canvases");
         canvas = GameObject.Instantiate(canvasPrefab);
-
+        gameOverText = canvas.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>();
+        gameOverText.enabled = false;
+        GamePlayManager.Instance.onGameOver += OnGameOver;
         iconContainer = canvas.transform.GetChild(0).GetChild(0);
         icons = iconContainer.GetComponentsInChildren<Transform>();
         outlines = icons.Select(icon => icon.GetComponent<Outline>()).Where(outline => outline != null).ToArray();
         SelectIcon(Elements.Fire);
     }
 
+    private void OnDisable()
+    {
+        GamePlayManager.Instance.onGameOver -= OnGameOver;
+    }
+
+    private void OnGameOver()
+    {
+        gameOverText.enabled = true;
+    }
 
     internal void SelectIcon(Elements obj)
     {
