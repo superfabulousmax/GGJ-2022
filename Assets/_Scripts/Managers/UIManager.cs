@@ -7,7 +7,7 @@ using Utils;
 using System.Linq;
 using TMPro;
 
-public class UIManager : MonoBehaviour
+public class UIManager : PersistentSingleton<UIManager>
 {
     private GameObject canvasPrefab;
     private GameObject canvas;
@@ -16,6 +16,9 @@ public class UIManager : MonoBehaviour
     private Outline [] outlines;
     private TMP_Text gameOverText;
     public static UIManager Instance;
+    private int totalKilled;
+    private int totalHealed;
+    private int totalDamage;
 
     public void Awake()
     {
@@ -31,19 +34,14 @@ public class UIManager : MonoBehaviour
         canvas = GameObject.Instantiate(canvasPrefab);
         gameOverText = canvas.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>();
         gameOverText.enabled = false;
-        GamePlayManager.Instance.onGameOver += OnGameOver;
         iconContainer = canvas.transform.GetChild(0).GetChild(0);
         icons = iconContainer.GetComponentsInChildren<Transform>();
         outlines = icons.Select(icon => icon.GetComponent<Outline>()).Where(outline => outline != null).ToArray();
         SelectIcon(Elements.Fire);
     }
 
-    private void OnDisable()
-    {
-        GamePlayManager.Instance.onGameOver -= OnGameOver;
-    }
 
-    private void OnGameOver()
+    public void OnGameOver()
     {
         gameOverText.enabled = true;
     }
@@ -62,18 +60,21 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    internal void UpdateDisplayDamage()
+    internal void UpdateDisplayDamage(int amount)
     {
         // todo
+        totalDamage = amount;
     }
 
-    internal void UpdateDisplayHeals()
+    internal void UpdateDisplayHeals(int amount)
     {
         // todo
+        totalHealed = amount;
     }
 
-    internal void UpdateDisplayKills()
+    internal void UpdateDisplayKills(int amount)
     {
         // todo
+        totalKilled = amount;
     }
 }

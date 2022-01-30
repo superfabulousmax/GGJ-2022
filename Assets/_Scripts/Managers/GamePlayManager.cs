@@ -96,6 +96,7 @@ public class GamePlayManager : MonoBehaviour
     private void SetGameOver()
     {
         isGameOver = true;
+        UIManager.Instance.OnGameOver();
         Debug.Log("GAME OVER");
     }
 
