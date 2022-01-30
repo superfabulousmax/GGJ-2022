@@ -13,6 +13,7 @@ public class PlayerHealthController : MonoBehaviour
     private float _initFillScaleX;
     private Vector3 _fillScale;
     private Vector3 _fillPosition;
+    private GamePlayManager gamePlayManager;
 
     private void Awake()
     {
@@ -21,6 +22,24 @@ public class PlayerHealthController : MonoBehaviour
         _initFillScaleX = _barFill.transform.localScale.x;
         _fillScale = _barFill.transform.localScale;
         _fillPosition = _barFill.transform.localPosition;
+    }
+    private void Start()
+    {
+        gamePlayManager = FindObjectOfType<GamePlayManager>();
+        if(gamePlayManager)
+        {
+            gamePlayManager.onGameOver += OnGameOver;
+        }
+    }
+
+    private void OnDisable()
+    {
+        gamePlayManager.onGameOver -= OnGameOver;
+    }
+
+    private void OnGameOver()
+    {
+        _alive = false;
     }
 
     public void TakeDamage(float damage)
@@ -44,7 +63,7 @@ public class PlayerHealthController : MonoBehaviour
         if (_health <= 0)
         {
             _alive = false;
-            // send event
+            gamePlayManager.SendGameOver();
         }
     }
 }

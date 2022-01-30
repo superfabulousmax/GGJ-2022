@@ -61,7 +61,6 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnGameOver()
     {
-        throw new NotImplementedException();
     }
 
     private void OnKill(int totalKilled)

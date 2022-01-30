@@ -17,7 +17,11 @@ public abstract class AbilityState
     }
 
     public abstract void Enter();
-    public abstract void Handle();
+    public virtual void Handle()
+    {
+        if (GamePlayManager.Instance.IsGameOver)
+            return;
+    }
 
     public abstract void Exit();
 }
