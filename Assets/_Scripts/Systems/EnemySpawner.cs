@@ -27,7 +27,8 @@ public class EnemySpawner : MonoBehaviour
     private GameObject waterDamageVFX;
     private GameObject airDamageVFX;
     private GameObject earthDamageVFX;
-    public void Init(GameObject player, GameObject fire, GameObject water, GameObject air, GameObject earth)
+    private GameObject healVFX;
+    public void Init(GameObject player, GameObject fire, GameObject water, GameObject air, GameObject earth, GameObject heal)
     {
         timer = 0;
         formationPrefabs = Resources.LoadAll<GameObject>("Prefabs/Enemy Formations");
@@ -38,6 +39,7 @@ public class EnemySpawner : MonoBehaviour
         waterDamageVFX = water;
         airDamageVFX = air;
         earthDamageVFX = earth;
+        healVFX = heal;
         enemies = new Enemies() { };
         enemies.fireEnemy = Resources.Load<GameObject>($"{Constants.EnemiesFolder}Fire Enemy");
         enemies.waterEnemy = Resources.Load<GameObject>($"{Constants.EnemiesFolder}Water Enemy");
@@ -51,11 +53,16 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if(timer >= coolDown)
+        if(CanSpawnMore() && timer >= coolDown)
         {
             SpawnFormation();
             timer = 0;
         }
+    }
+
+    private bool CanSpawnMore()
+    {
+        return CountActive() < Constants.MaxEnemies;
     }
 
     private GameObject GetRandomFormation()
@@ -106,7 +113,7 @@ public class EnemySpawner : MonoBehaviour
         {
             var targetPos = trans.position;
             targetPos.z = 0;
-            var enemy = enemyManager.SpawnEnemy(targetPos, randomElement, GetDamageVFX(randomElement));
+            var enemy = enemyManager.SpawnEnemy(targetPos, randomElement, GetDamageVFX(randomElement), healVFX);
             enemy.GetComponentInChildren<SpriteRenderer>().sortingOrder = sortingOrder;
             sortingOrder++;
         }
@@ -122,5 +129,10 @@ public class EnemySpawner : MonoBehaviour
         else if (element == Elements.Earth)
             return earthDamageVFX;
         return airDamageVFX;
+    }
+
+    public int CountActive()
+    {
+        return enemyManager.GetTotalActiveEnemies();
     }
 }

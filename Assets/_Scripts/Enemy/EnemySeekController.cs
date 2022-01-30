@@ -14,6 +14,7 @@ public class EnemySeekController : MonoBehaviour
     private int health;
     private Elements element;
     private GameObject damageVFX;
+    private GameObject healVFX;
     private const int fullPrimaryDamage = 40;
     public Rigidbody2D GetRigidBody => _rigidBody;
     public Collider2D GetCollider => _collider;
@@ -24,12 +25,13 @@ public class EnemySeekController : MonoBehaviour
         _collider = GetComponent<Collider2D>();
     }
 
-    public void SpawnAndSeek(Vector3 spawnPosition, Transform playerTransform, Elements element, GameObject damageVFX)
+    public void SpawnAndSeek(Vector3 spawnPosition, Transform playerTransform, Elements element, GameObject damageVFX, GameObject healVFX)
     {
         transform.position = spawnPosition;
         _playerTarget = playerTransform;
         this.element = element;
         this.damageVFX = damageVFX;
+        this.healVFX = healVFX;
         health = 100;
     }
 
@@ -77,6 +79,7 @@ public class EnemySeekController : MonoBehaviour
         if(element == hitWith)
         {
             health += fullPrimaryDamage * factor;
+            MakeHealVFX();
 
         }
         else if(hitWith == GetOpposite())
@@ -103,6 +106,14 @@ public class EnemySeekController : MonoBehaviour
             return;
         var damage = Instantiate(damageVFX, transform.position, Quaternion.identity);
         Destroy(damage, 1);
+    }
+
+    private void MakeHealVFX()
+    {
+        if (healVFX == null)
+            return;
+        var heal = Instantiate(healVFX, transform.position, Quaternion.identity);
+        Destroy(heal, 1);
     }
 
     private Elements GetOpposite()

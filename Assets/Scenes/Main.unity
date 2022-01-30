@@ -651,6 +651,7 @@ MonoBehaviour:
     type: 3}
   earthDamageVFX: {fileID: 958378468428849944, guid: e47a46e00fecc0f44b6bb2f2d0a438c2,
     type: 3}
+  healVFX: {fileID: 1375175134864340920, guid: 205902bc601505a4aa63c60b0728ba5b, type: 3}
 --- !u!1 &1727938692
 GameObject:
   m_ObjectHideFlags: 0
