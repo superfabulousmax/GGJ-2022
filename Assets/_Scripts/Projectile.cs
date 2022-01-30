@@ -8,7 +8,9 @@ public class Projectile : MonoBehaviour, ICreateElement
     private GameObject damageFX;
     private Rigidbody2D _rigidBody;
     private Collider2D _collider;
+    private Vector2 _direction;
 
+    public int hitCount = 0;
     public event Action<Projectile, EnemySeekController> onPrimaryHitEnemy;
     public Collider2D GetCollider => _collider;
     public Rigidbody2D GetRigidbody => _rigidBody;
@@ -23,7 +25,13 @@ public class Projectile : MonoBehaviour, ICreateElement
     {
         this.speed = elementProjectile.Speed;
         this.damageFX = elementProjectile.DamageFX;
-        _rigidBody.velocity = direction * speed;
+        _direction = direction;
+        KeepVelocity();
+    }
+
+    public void KeepVelocity()
+    {
+        _rigidBody.velocity = _direction * speed;
     }
 
     void OnCollisionEnter2D(Collision2D col)

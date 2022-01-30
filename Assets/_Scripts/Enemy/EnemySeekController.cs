@@ -70,25 +70,25 @@ public class EnemySeekController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Fire Projectile"))
-        {
-            CalculateDamage(Elements.Fire);
-        }
+        //if(collision.gameObject.CompareTag("Fire Projectile"))
+        //{
+        //    CalculateDamage(Elements.Fire);
+        //}
 
-        if (collision.gameObject.CompareTag("Water Projectile"))
-        {
-            CalculateDamage(Elements.Water);
-        }
+        //if (collision.gameObject.CompareTag("Water Projectile"))
+        //{
+        //    CalculateDamage(Elements.Water);
+        //}
 
-        if (collision.gameObject.CompareTag("Earth Projectile"))
-        {
-            CalculateDamage(Elements.Earth);
-        }
+        //if (collision.gameObject.CompareTag("Earth Projectile"))
+        //{
+        //    CalculateDamage(Elements.Earth);
+        //}
 
-        if (collision.gameObject.CompareTag("Air Projectile"))
-        {
-            CalculateDamage(Elements.Air);
-        }
+        //if (collision.gameObject.CompareTag("Air Projectile"))
+        //{
+        //    CalculateDamage(Elements.Air);
+        //}
     }
 
     void OnParticleCollision(GameObject other)

@@ -146,6 +146,7 @@ public class FireState : AbilityState
             sprite.gameObject.SetActive(false);
         }
 
+        projectile.onPrimaryHitEnemy -= onPrimaryHit;
         GameObject.Destroy(projectile.gameObject, 0.5f);
 
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(projectile.transform.position, primaryRadius);
