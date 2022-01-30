@@ -8,8 +8,7 @@ using TMPro;
 using NaughtyAttributes;
 using Utils;
 
-[CreateAssetMenu(fileName = "GameManager", menuName = "Singletons/GameManager")]
-public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
+public class GamePlayManager : MonoBehaviour
 {
     // Abilities
     Abilities primaryAbilities;
@@ -21,6 +20,7 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
     private AbilitySet currentAbilities;
 
     // Player
+    [SerializeField]
     private GameObject _player;
     private PlayerContext _playerContext;
     private FireState fireState;
@@ -46,10 +46,9 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
         currentAbilities = abilities;
         _playerContext.TransitionTo(newState);
     }
-    protected override void Initialize()
+    void Start()
     {
         Debug.Log("Initializing the GamePlayManager");
-        base.Initialize();
         changeAbility = CallChangeAbilityEvent;
         selectIcon = UIManager.Instance.SelectIcon;
         onPlayerInstantiated = OnPlayerInstantiated;
@@ -99,7 +98,8 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
 
     private void SetUpPlayer()
     {
-        _player = Instantiate(_playerPrefab);
+        if(_player == null)
+            _player = Instantiate(_playerPrefab);
         _playerContext = new PlayerContext(fireState, _player.transform, this);
         onPlayerInstantiated?.Invoke(_player);
     }
@@ -130,7 +130,7 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
         airState.SetAbilities(airAbilitySet);
     }
 
-    public override void OnUpdate()
+    public void Update()
     {
         // fire
         var y = Input.mouseScrollDelta.y;
@@ -162,11 +162,6 @@ public class GamePlayManager : yaSingleton.Singleton<GamePlayManager>
             selectIcon?.Invoke(Elements.Earth);
         }
         _playerContext.Handle();
-    }
-
-    protected override void Deinitialize()
-    {
-        base.Deinitialize();
     }
 
     private void SetupEnemy()
