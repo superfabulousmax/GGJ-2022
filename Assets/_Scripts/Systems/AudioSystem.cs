@@ -7,10 +7,29 @@ using UnityEngine;
 public class AudioSystem : StaticInstance<AudioSystem> {
     [SerializeField] private AudioSource _musicSource;
     [SerializeField] private AudioSource _soundsSource;
+    private const float secondaryCoolDown = 1.5f;
+    private const float waitTime = 0.6f;
+    private float secondaryFxTimer;
 
-    public void PlayMusic(AudioClip clip) {
+    public void Update()
+    {
+        secondaryFxTimer += Time.deltaTime;
+    }
+    public void PlayMusic(AudioClip clip)
+    {
         _musicSource.clip = clip;
         _musicSource.Play();
+    }
+
+    public void PlaySecondarySound(AudioClip clip, Vector3 pos, float vol = 1)
+    {
+        if(secondaryFxTimer >= secondaryCoolDown)
+        {
+            _soundsSource.transform.position = pos;
+            PlaySound(clip, vol);
+            secondaryFxTimer = 0;
+        }
+
     }
 
     public void PlaySound(AudioClip clip, Vector3 pos, float vol = 1) {

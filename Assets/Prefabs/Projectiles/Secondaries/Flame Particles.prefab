@@ -3687,9 +3687,9 @@ ParticleSystem:
     serializedVersion: 4
     type: 1
     collisionMode: 1
-    colliderForce: 0
+    colliderForce: 1
     multiplyColliderForceByParticleSize: 0
-    multiplyColliderForceByParticleSpeed: 0
+    multiplyColliderForceByParticleSpeed: 1
     multiplyColliderForceByCollisionAngle: 0
     m_Planes: []
     m_Dampen:
@@ -3857,7 +3857,7 @@ ParticleSystem:
     collidesWith:
       serializedVersion: 2
       m_Bits: 64
-    maxCollisionShapes: 200
+    maxCollisionShapes: 20
     quality: 0
     voxelSize: 0.5
     collisionMessages: 1

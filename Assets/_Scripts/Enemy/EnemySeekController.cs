@@ -23,8 +23,12 @@ public class EnemySeekController : MonoBehaviour
     private const int fullPrimaryDamage = 50;
     private float damageFxTimer;
     private float healFxTimer;
+    private float particleTimer;
+
     private const float fxCoolDown = 0.4f;
+    private const float particleCoolDown = 2f;
     private const float healFxCoolDown = 0.2f;
+    private const int maxHealth = 200;
     private AudioSource _audioSource;
     public Rigidbody2D GetRigidBody => _rigidBody;
     public Collider2D GetCollider => _collider;
@@ -77,36 +81,18 @@ public class EnemySeekController : MonoBehaviour
     {
         damageFxTimer += Time.deltaTime;
         healFxTimer += Time.deltaTime;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        //if(collision.gameObject.CompareTag("Fire Projectile"))
-        //{
-        //    CalculateDamage(Elements.Fire);
-        //}
-
-        //if (collision.gameObject.CompareTag("Water Projectile"))
-        //{
-        //    CalculateDamage(Elements.Water);
-        //}
-
-        //if (collision.gameObject.CompareTag("Earth Projectile"))
-        //{
-        //    CalculateDamage(Elements.Earth);
-        //}
-
-        //if (collision.gameObject.CompareTag("Air Projectile"))
-        //{
-        //    CalculateDamage(Elements.Air);
-        //}
+        particleTimer += Time.deltaTime;
     }
 
     void OnParticleCollision(GameObject other)
     {
         if (other.CompareTag("Secondary Fire Projectile"))
         {
-            CalculateDamage(Elements.Fire, 2);
+            if (particleTimer >= particleCoolDown)
+            {
+                CalculateDamage(Elements.Fire, 2);
+                particleTimer = 0;
+            }
         }
     }
 
@@ -120,10 +106,12 @@ public class EnemySeekController : MonoBehaviour
         if(element == hitWith)
         {
             var amount = fullPrimaryDamage * factor;
+            var oldHeath = health;
             health += amount;
             MakeHealVFX();
             PlayHealSFX();
             healFxTimer = 0;
+            amount = Mathf.Min(amount, maxHealth - oldHeath);
             onHeal?.Invoke(amount);
 
         }
@@ -145,7 +133,7 @@ public class EnemySeekController : MonoBehaviour
             damageFxTimer = 0;
             onDamage?.Invoke(amount);
         }
-        Mathf.Clamp(health, 0, 200);
+        health = Mathf.Clamp(health, 0, maxHealth);
         if(health <= 0)
         {
             onKill?.Invoke(1);
@@ -173,7 +161,7 @@ public class EnemySeekController : MonoBehaviour
             return;
         if (healFxTimer >= fxCoolDown)
         {
-            _audioSource?.PlayOneShot(heal);
+            AudioSystem.Instance.PlaySound(heal, transform.position, 0.6f);
         }
 
     }
@@ -195,10 +183,7 @@ public class EnemySeekController : MonoBehaviour
         {
             if (secondaryDamage == null)
                 return;
-            if(damageFxTimer >= fxCoolDown * 2)
-            {
-                _audioSource?.PlayOneShot(secondaryDamage);
-            }
+            AudioSystem.Instance.PlaySecondarySound(secondaryDamage, transform.position, 0.5f);
         }
         else
         {
@@ -206,7 +191,7 @@ public class EnemySeekController : MonoBehaviour
                 return;
             if (damageFxTimer >= fxCoolDown)
             {
-                _audioSource?.PlayOneShot(primaryDamage);
+                AudioSystem.Instance.PlaySound(primaryDamage, transform.position, 0.6f);
             }
         }
 

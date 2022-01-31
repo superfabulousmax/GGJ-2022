@@ -20,7 +20,6 @@ public class EnemyManager
     public event Action<int> onHeal = (int amount) => { };
     public event Action<int> onDamage = (int amount) => { };
     private SoundFX _sound;
-
     public EnemyManager(GameObject player, Enemies enemies, GameObject enemyHolder, SoundFX sound)
     {
         _player = player;
@@ -65,6 +64,8 @@ public class EnemyManager
             maxSize: Constants.MaxEnemies / 4
         );
     }
+
+
 
     public void OnKill(int amount)
     {
