@@ -848,7 +848,7 @@ MonoBehaviour:
       type: 3}
     waterSecondaryDamage: {fileID: 8300000, guid: bc8bcdc8a8a529b4cb3c4f04fa639e30,
       type: 3}
-    airSecondaryDamage: {fileID: 8300000, guid: 4ca3b653bc3b65f4eb0b3db329e82459,
+    airSecondaryDamage: {fileID: 8300000, guid: e0b2b325b33f417498db6289f48b4957,
       type: 3}
     earthSecondaryDamage: {fileID: 8300000, guid: fecd8406da1f6b446bff2296a5863ec4,
       type: 3}

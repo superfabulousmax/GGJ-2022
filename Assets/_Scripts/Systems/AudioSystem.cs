@@ -7,7 +7,7 @@ using UnityEngine;
 public class AudioSystem : MonoBehaviour{
     [SerializeField] private AudioSource _musicSource;
     [SerializeField] private AudioSource _soundsSource;
-    private const float secondaryCoolDown = 1.5f;
+    private const float secondaryCoolDown = 0.8f;
     private const float waitTime = 0.6f;
     private float secondaryFxTimer;
 
