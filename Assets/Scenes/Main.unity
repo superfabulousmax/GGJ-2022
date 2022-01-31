@@ -853,6 +853,7 @@ MonoBehaviour:
     earthSecondaryDamage: {fileID: 8300000, guid: fecd8406da1f6b446bff2296a5863ec4,
       type: 3}
     heal: {fileID: 8300000, guid: 5a537468197e881459eb77b9e73fd011, type: 3}
+    hit: {fileID: 8300000, guid: 632f8b8dc39453a45a8999bf2e27087f, type: 3}
   _sceneLoadingManager: {fileID: 254232646}
   _DataManager: {fileID: 1024866971}
 --- !u!114 &1182088845

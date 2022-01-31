@@ -101,6 +101,7 @@ public class EnemyManager
 
     public AudioClip PrimaryDamageClipForElement(Elements element)
     {
+#if false
         switch (element)
         {
             case Elements.Fire:
@@ -114,6 +115,9 @@ public class EnemyManager
             default:
                 return null;
         }
+#else
+        return _sound.hit;
+#endif
     }
 
     public AudioClip SecondaryDamageClipForElement(Elements element)

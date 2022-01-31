@@ -16,4 +16,5 @@ public class SoundFX
     public AudioClip airSecondaryDamage;
     public AudioClip earthSecondaryDamage;
     public AudioClip heal;
+    public AudioClip hit;
 }

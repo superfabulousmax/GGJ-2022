@@ -111,7 +111,7 @@ public class EnemySpawner : MonoBehaviour
 
     public bool UnderPressure()
     {
-        return CountActive() > 40;
+        return CountActive() > 100;
     }
 
     public void PlayPressureMusic()
