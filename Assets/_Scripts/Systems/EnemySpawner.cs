@@ -94,14 +94,14 @@ public class EnemySpawner : MonoBehaviour
             timer = 0;
         }
 
-        if(!isPressureMusicPlaying && UnderPressure())
-        {
-            PlayPressureMusic();
-        }
-        else if(isPressureMusicPlaying && !UnderPressure())
-        {
-            PlayNormalMusic();
-        }
+        //if(!isPressureMusicPlaying && UnderPressure())
+        //{
+        //    PlayPressureMusic();
+        //}
+        //else if(isPressureMusicPlaying && !UnderPressure())
+        //{
+        //    PlayNormalMusic();
+        //}
     }
 
     private bool CanSpawnMore()
