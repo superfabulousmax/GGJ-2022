@@ -37,6 +37,7 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField]
     private SoundFX sound;
     private PlayerContext _playerContext;
+    private AbilityState currentState;
     private FireState fireState;
     private WaterState waterState;
     private AirState airState;
@@ -153,6 +154,7 @@ public class GamePlayManager : MonoBehaviour
             _player = Instantiate(_playerPrefab);
         _playerContext = new PlayerContext(fireState, _player.transform, this, sound.audioSource);
         onPlayerInstantiated?.Invoke(_player);
+        currentState = fireState;
     }
 
     private void InitFireState()
@@ -196,34 +198,45 @@ public class GamePlayManager : MonoBehaviour
 
         }
         // fire
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (currentState != fireState && Input.GetKeyDown(KeyCode.Alpha1))
         {
             changeAbility?.Invoke(fireAbilitySet, fireState);
+            currentState = fireState;
             selectIcon?.Invoke(Elements.Fire);
         }
         // water
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (currentState != waterState && Input.GetKeyDown(KeyCode.Alpha2))
         {
             changeAbility?.Invoke(waterAbilitySet, waterState);
             selectIcon?.Invoke(Elements.Water);
+            currentState = waterState;
         }
         // air
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (currentState != airState && Input.GetKeyDown(KeyCode.Alpha3))
         {
             changeAbility?.Invoke(airAbilitySet, airState);
             selectIcon?.Invoke(Elements.Air);
+            currentState = airState;
         }
         // earth
-        if (Input.GetKeyDown(KeyCode.Alpha4))
+        if (currentState != earthState && Input.GetKeyDown(KeyCode.Alpha4))
         {
             changeAbility?.Invoke(earthAbilitySet, earthState);
             selectIcon?.Invoke(Elements.Earth);
+            currentState = earthState;
         }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+#if !UNITY_WEBGL
             Application.Quit();
+#endif
         }
         _playerContext.Handle();
+        fireState.HandleCoolDown();
+        waterState.HandleCoolDown();
+        airState.HandleCoolDown();
+        earthState.HandleCoolDown();
     }
 
     private void SetupEnemy()

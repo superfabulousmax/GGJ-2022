@@ -29,6 +29,9 @@ public class SceneLoadingManager : MonoBehaviour
 
     public void OnQuitButton()
     {
+#if UNITY_WEBGL
+        return;
+#endif
         Application.Quit();
     }
 

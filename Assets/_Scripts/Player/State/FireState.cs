@@ -9,21 +9,14 @@ public class FireState : AbilityState
     private FireAbility firePrimary;
     private FireAbility fireSecondary;
     private int buildUpKillNumber;
-    private float primaryCoolDown;
-    private float primaryTimer;
-    private float secondaryCoolDown;
-    private float secondaryTimer;
-    private float secondaryDuration;
-    private float primaryRadius = 1.5f;
+    private float primaryRadius = 2f;
     private Transform fire;
     private Collider2D playerCollider;
-    private bool canShootPrimary;
-    private bool canShootSecondary;
-    private bool secondaryActive;
     private FlameThrower flameThrower;
 
     public override void Enter()
     {
+        base.Enter();
         this.firePrimary = abilities.primary as FireAbility;
         this.fireSecondary = abilities.secondary as FireAbility;
         this.primaryCoolDown = firePrimary.Cooldown.x;
@@ -31,9 +24,6 @@ public class FireState : AbilityState
         this.secondaryCoolDown = fireSecondary.Cooldown.x;
         this.secondaryTimer = 0;
         this.secondaryDuration = fireSecondary.Duration;
-        canShootPrimary = true;
-        canShootSecondary = false;
-        secondaryActive = false;
         buildUpKillNumber = 10;
         fire = _context.player.Find("Fire");
         playerCollider = _context.player.GetComponent<Collider2D>();
@@ -47,33 +37,17 @@ public class FireState : AbilityState
 
     public override void Exit()
     {
+        base.Exit();
         DisableSecondary();
         buildUpKillNumber = 0;
         primaryTimer = 0;
         secondaryTimer = 0;
-        secondaryActive = false;
         _context.gamePlayManager.changeAbility -= ChangeAbility;
     }
 
     public override void Handle()
     {
         base.Handle();
-        if(secondaryActive)
-        {
-            secondaryTimer += Time.deltaTime;
-            if(secondaryTimer >= secondaryDuration)
-            {
-                DisableSecondary();
-            }
-        }
-        else
-        {
-            primaryTimer += Time.deltaTime;
-            if (primaryTimer >= primaryCoolDown)
-            {
-                canShootPrimary = true;
-            }
-        }
 
         if (!secondaryActive && canShootPrimary && Input.GetKey(KeyCode.Mouse0))
         {
@@ -87,7 +61,7 @@ public class FireState : AbilityState
             GameObject.Instantiate(firePrimary.Projectile.ProjectilePrefab, _context.player.position, Quaternion.identity).TryGetComponent<Projectile>(out var projectile);
             Physics2D.IgnoreCollision(playerCollider, projectile.GetCollider);
             projectile.Instantiate(firePrimary.Projectile, direction, _context.player, fire);
-            projectile.onPrimaryHitEnemy += onPrimaryHit;
+            projectile.onPrimaryHitEnemy += OnPrimaryHit;
 
             canShootPrimary = false;
             primaryTimer = 0;
@@ -135,7 +109,7 @@ public class FireState : AbilityState
         flameThrower.Instantiate(firePrimary.Projectile, direction, _context.player, fire);
     }
 
-    private void DisableSecondary()
+    public override void DisableSecondary()
     {
         secondaryTimer = 0;
         secondaryActive = false;
@@ -145,7 +119,7 @@ public class FireState : AbilityState
         }
     }
 
-    private void onPrimaryHit(Projectile projectile, EnemySeekController enemySeekController)
+    private void OnPrimaryHit(Projectile projectile, EnemySeekController enemySeekController)
     {
         var explosionVFX = GameObject.Instantiate(firePrimary.Vfx);
         explosionVFX.transform.position = projectile.transform.position;
@@ -159,7 +133,7 @@ public class FireState : AbilityState
             sprite.gameObject.SetActive(false);
         }
 
-        projectile.onPrimaryHitEnemy -= onPrimaryHit;
+        projectile.onPrimaryHitEnemy -= OnPrimaryHit;
         GameObject.Destroy(projectile.gameObject, 0.5f);
 
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(projectile.transform.position, primaryRadius);

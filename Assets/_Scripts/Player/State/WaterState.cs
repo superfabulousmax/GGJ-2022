@@ -8,25 +8,18 @@ public class WaterState : AbilityState
     private WaterAbility waterPrimary;
     private WaterAbility waterSecondary;
     private int buildUpKillNumber;
-    private float primaryCoolDown;
-    private float primaryTimer;
-    private const int maxHitCount = 7;
-    private float secondaryCoolDown;
-    private float secondaryTimer;
+    private const int maxHitCount = 10;
     private Transform fire;
     private Collider2D playerCollider;
-    private bool canShootPrimary;
-    private bool canShootSecondary;
     public override void Enter()
     {
+        base.Enter();
         this.waterPrimary = abilities.primary as WaterAbility;
         this.waterSecondary = abilities.secondary as WaterAbility;
         this.primaryCoolDown = waterPrimary.Cooldown.x;
         this.primaryTimer = 0;
         this.secondaryCoolDown = waterSecondary.Cooldown.x;
         this.secondaryTimer = 0;
-        canShootPrimary = true;
-        canShootSecondary = false;
         buildUpKillNumber = 10;
         fire = _context.player.Find("Fire");
         playerCollider = _context.player.GetComponent<Collider2D>();
@@ -40,6 +33,7 @@ public class WaterState : AbilityState
 
     public override void Exit()
     {
+        base.Exit();
         buildUpKillNumber = 0;
         primaryTimer = 0;
         secondaryTimer = 0;
@@ -49,11 +43,6 @@ public class WaterState : AbilityState
     public override void Handle()
     {
         base.Handle();
-        primaryTimer += Time.deltaTime;
-        if (primaryTimer >= primaryCoolDown)
-        {
-            canShootPrimary = true;
-        }
         if (canShootPrimary && Input.GetKey(KeyCode.Mouse0))
         {
             MakeShootSound();
