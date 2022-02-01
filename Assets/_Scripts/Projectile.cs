@@ -40,10 +40,9 @@ public class Projectile : MonoBehaviour, ICreateElement
         {
             onPrimaryHitEnemy?.Invoke(this, enemy);
         }
-    }
-
-    void OnBecameInvisible()
-    {
-        Destroy(gameObject);
+        if (col.gameObject.GetComponent<Projectile>() != null)
+        {
+            Destroy(gameObject);
+        }
     }
 }

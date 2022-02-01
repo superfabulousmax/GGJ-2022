@@ -12,8 +12,16 @@ public class EnemySeekController : MonoBehaviour
     private Collider2D _collider;
     private const float OffsetToPlayer = 0.65f;
     private const float OffsetToEnemy = 1f;
+    private const float DistanceLimit = 20f;
     private int health;
     private Elements element;
+
+    internal void RespawnEnemy()
+    {
+        Debug.Log("Respawn Enemy");
+        ReleaseResource();
+    }
+
     private GameObject damageVFX;
     private GameObject healVFX;
     private AudioClip primaryDamage;
@@ -68,6 +76,11 @@ public class EnemySeekController : MonoBehaviour
         if (_playerTarget)
         {
             Vector2 distance = _playerTarget.position - transform.position;
+            if(distance.sqrMagnitude >= DistanceLimit * DistanceLimit)
+            {
+                RespawnEnemy();
+      
+            }
             Vector2 direction = distance.normalized;
 
             if (distance.magnitude >= OffsetToPlayer)
@@ -227,4 +240,5 @@ public class EnemySeekController : MonoBehaviour
             }
         }
     }
+
 }

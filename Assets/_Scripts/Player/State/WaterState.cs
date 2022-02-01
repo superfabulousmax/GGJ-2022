@@ -56,8 +56,6 @@ public class WaterState : AbilityState
             projectile.Instantiate(waterPrimary.Projectile, direction, _context.player, fire);
             projectile.onPrimaryHitEnemy += onPrimaryHit;
 
-            //_source.PlayOneShot(_clip);
-
             canShootPrimary = false;
             primaryTimer = 0;
         }

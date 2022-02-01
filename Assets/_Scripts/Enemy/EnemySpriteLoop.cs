@@ -9,12 +9,14 @@ public class EnemySpriteLoop : MonoBehaviour
     private float _time;
     private float _fps = 1f/30f;
     private SpriteRenderer _spriteRenderer;
+    private bool hasBeenSeen;
 
     void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _currFrame = Random.Range(0, _frameArray.Length);
         _spriteRenderer.sprite = _frameArray[_currFrame];
+        hasBeenSeen = false;
     }
 
     void Update()
@@ -28,4 +30,5 @@ public class EnemySpriteLoop : MonoBehaviour
             _spriteRenderer.sprite = _frameArray[_currFrame];
         }
     }
+
 }
