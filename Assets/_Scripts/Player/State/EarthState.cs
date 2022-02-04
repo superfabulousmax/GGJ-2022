@@ -11,6 +11,7 @@ public class EarthState : AbilityState
     private float primaryRadius = 2f;
     private float secondaryRadius = 6f;
     private float shakeAmount = 0.5f;
+    private bool canEnableSecondary = true;
     private Transform fire;
     private Collider2D playerCollider;
     public override void Enter()
@@ -20,6 +21,7 @@ public class EarthState : AbilityState
         this.earthSecondary = abilities.secondary as EarthAbility;
         this.primaryCoolDown = earthPrimary.Cooldown.x;
         this.primaryTimer = 0;
+        this.secondaryDuration = earthSecondary.Duration;
         this.secondaryCoolDown = earthSecondary.Cooldown.x;
         this.secondaryTimer = 0;
         buildUpKillNumber = 10;
@@ -65,7 +67,7 @@ public class EarthState : AbilityState
             canShootPrimary = false;
             primaryTimer = 0;
         }
-        else if (!secondaryActive && Input.GetKeyDown(KeyCode.Mouse1))
+        else if (canEnableSecondary && !secondaryActive && Input.GetKeyDown(KeyCode.Mouse1))
         {
             if (buildUpKillNumber >= Constants.SecondaryThreshold)
             {
@@ -76,6 +78,16 @@ public class EarthState : AbilityState
 
     public override void HandleCoolDown()
     {
+        if(!canEnableSecondary)
+        {
+            secondaryTimer += Time.deltaTime;
+            if (secondaryTimer >= secondaryCoolDown)
+            {
+                canEnableSecondary = true;
+                secondaryTimer = 0;
+            }
+        }
+      
         primaryTimer += Time.deltaTime;
         if (primaryTimer >= primaryCoolDown)
         {
@@ -85,13 +97,13 @@ public class EarthState : AbilityState
 
     public void EnableSecondary()
     {
+        canEnableSecondary = false;
         secondaryActive = true;
-        CameraShake.Shake(secondaryCoolDown, shakeAmount);
+        CameraShake.Shake(secondaryDuration, shakeAmount);
     }
 
     public override void DisableSecondary()
     {
-        secondaryTimer = 0;
         secondaryActive = false;
     }
 
