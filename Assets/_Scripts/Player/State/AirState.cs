@@ -60,6 +60,17 @@ public class AirState : AbilityState
             canShootPrimary = false;
             primaryTimer = 0;
         }
+        else if (!secondaryActive && Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            if (buildUpKillNumber >= Constants.SecondaryThreshold)
+            {
+                EnableSecondary();
+            }
+        }
+    }
+
+    private void EnableSecondary()
+    {
     }
 
     private void MakeShootSound()

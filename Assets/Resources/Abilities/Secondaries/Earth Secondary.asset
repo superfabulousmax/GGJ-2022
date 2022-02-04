@@ -17,6 +17,6 @@ MonoBehaviour:
   sprite: {fileID: 0}
   vfx: {fileID: 0}
   sound: {fileID: 0}
-  duration: 0
-  cooldown: {x: 0, y: 0}
+  duration: 2
+  cooldown: {x: 0.5, y: 2}
   projectile: {fileID: 11400000, guid: 870df9f2fa154444fa6b1ad59e41bd12, type: 2}

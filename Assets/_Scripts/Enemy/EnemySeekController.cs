@@ -10,6 +10,7 @@ public class EnemySeekController : MonoBehaviour
     private Transform _playerTarget;
     private Rigidbody2D _rigidBody;
     private Collider2D _collider;
+    private SpriteRenderer _spriteRenderer;
     private const float OffsetToPlayer = 0.65f;
     private const float OffsetToEnemy = 1f;
     private const float DistanceLimit = 20f;
@@ -38,6 +39,8 @@ public class EnemySeekController : MonoBehaviour
     private const float healFxCoolDown = 0.2f;
     private const int maxHealth = 200;
     private AudioSource _audioSource;
+
+    private bool canMove;
     public Rigidbody2D GetRigidBody => _rigidBody;
     public Collider2D GetCollider => _collider;
 
@@ -49,6 +52,7 @@ public class EnemySeekController : MonoBehaviour
     {
         _rigidBody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     public void SpawnAndSeek(EnemyManager enemyManager, Vector3 spawnPosition, Transform playerTransform, Elements element, GameObject damageVFX, GameObject healVFX, AudioSource audioSource, AudioClip primaryDamage, AudioClip secondaryDamage, AudioClip heal)
@@ -66,14 +70,38 @@ public class EnemySeekController : MonoBehaviour
         health = 100;
         damageFxTimer = 0;
         healFxTimer = 0;
+        canMove = true;
         onKill = enemyManager.OnKill;
         onHeal = enemyManager.OnHeal;
         onDamage = enemyManager.OnDamage;
+        CameraShake.Instance.onStartShake += OnStartShake;
+        CameraShake.Instance.onFinishShake += OnFinishShake;
+    }
+
+    private void OnDisable()
+    {
+        CameraShake.Instance.onStartShake -= OnStartShake;
+        CameraShake.Instance.onFinishShake -= OnFinishShake;
+    }
+
+    private void OnStartShake(float duration)
+    {
+        canMove = false;
+        if (_spriteRenderer.isVisible)
+        {
+            DealDamage(Elements.Earth, 10);
+            PlayDamageSFX(2);
+        }
+    }
+
+    private void OnFinishShake()
+    {
+        canMove = true;
     }
 
     void FixedUpdate()
     {
-        if (_playerTarget)
+        if (canMove && _playerTarget)
         {
             Vector2 distance = _playerTarget.position - transform.position;
             if(distance.sqrMagnitude >= DistanceLimit * DistanceLimit)
@@ -87,6 +115,18 @@ public class EnemySeekController : MonoBehaviour
             {
                 _rigidBody.MovePosition(_rigidBody.position + _moveSpeed * direction * Time.fixedDeltaTime);
             }
+        }
+    }
+
+    private IEnumerator DamageOverTime(float time, float damage)
+    {
+        var timer = 0f;
+        PlayDamageSFX(2);
+        while (timer < time)
+        {
+            timer += Time.deltaTime;
+            DealDamage(Elements.Earth, (int)damage);
+            yield return null;
         }
     }
 
@@ -146,8 +186,13 @@ public class EnemySeekController : MonoBehaviour
             damageFxTimer = 0;
             onDamage?.Invoke(amount);
         }
+        ClampAndCheckHealth();
+    }
+
+    private void ClampAndCheckHealth()
+    {
         health = Mathf.Clamp(health, 0, maxHealth);
-        if(health <= 0)
+        if (health <= 0)
         {
             onKill?.Invoke(1);
             MakeDamageVFX();
@@ -155,7 +200,14 @@ public class EnemySeekController : MonoBehaviour
         }
     }
 
-
+    private void DealDamage(Elements hitWith, int amount)
+    {
+        health -= amount;
+        MakeDamageVFX();
+        damageFxTimer = 0;
+        onDamage?.Invoke(amount);
+        ClampAndCheckHealth();
+    }
 
     private void MakeHealVFX()
     {
