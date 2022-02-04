@@ -61,7 +61,7 @@ public class FireState : AbilityState
             GameObject.Instantiate(firePrimary.Projectile.ProjectilePrefab, _context.player.position, Quaternion.identity).TryGetComponent<Projectile>(out var projectile);
             Physics2D.IgnoreCollision(playerCollider, projectile.GetCollider);
             projectile.Instantiate(firePrimary.Projectile, direction, _context.player, fire);
-            projectile.onPrimaryHitEnemy += OnPrimaryHit;
+            projectile.onHitEnemy += OnPrimaryHit;
 
             canShootPrimary = false;
             primaryTimer = 0;
@@ -133,7 +133,7 @@ public class FireState : AbilityState
             sprite.gameObject.SetActive(false);
         }
 
-        projectile.onPrimaryHitEnemy -= OnPrimaryHit;
+        projectile.onHitEnemy -= OnPrimaryHit;
         GameObject.Destroy(projectile.gameObject, 0.5f);
 
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(projectile.transform.position, primaryRadius);

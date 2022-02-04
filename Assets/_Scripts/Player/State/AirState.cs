@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,9 @@ public class AirState : AbilityState
     private AirAbility airPrimary;
     private AirAbility airSecondary;
     private int buildUpKillNumber;
-    private const int maxHitCount = 10;
+    private const int PrimaryMaxHitCount = 10;
+    private const int SecondaryMaxHitCount = 5;
+    private bool canEnableSecondary;
     private Transform fire;
     private Collider2D playerCollider;
     public override void Enter()
@@ -20,6 +23,8 @@ public class AirState : AbilityState
         this.primaryTimer = 0;
         this.secondaryCoolDown = airSecondary.Cooldown.x;
         this.secondaryTimer = 0;
+        canEnableSecondary = true;
+        secondaryActive = false;
         buildUpKillNumber = 10;
         fire = _context.player.Find("Fire");
         playerCollider = _context.player.GetComponent<Collider2D>();
@@ -55,12 +60,12 @@ public class AirState : AbilityState
             GameObject.Instantiate(airPrimary.Projectile.ProjectilePrefab, _context.player.position, fire.rotation).TryGetComponent<Projectile>(out var projectile);
             Physics2D.IgnoreCollision(playerCollider, projectile.GetComponent<Collider2D>());
             projectile.Instantiate(airPrimary.Projectile, direction, _context.player, fire);
-            projectile.onPrimaryHitEnemy += onPrimaryHit;
+            projectile.onHitEnemy += onPrimaryHit;
 
             canShootPrimary = false;
             primaryTimer = 0;
         }
-        else if (!secondaryActive && Input.GetKeyDown(KeyCode.Mouse1))
+        else if (canEnableSecondary && Input.GetKey(KeyCode.Mouse1))
         {
             if (buildUpKillNumber >= Constants.SecondaryThreshold)
             {
@@ -71,6 +76,36 @@ public class AirState : AbilityState
 
     private void EnableSecondary()
     {
+        canEnableSecondary = false;
+        secondaryActive = true;
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 direction = (mousePos - (Vector2)_context.player.position);
+        var lookAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        fire.rotation = Quaternion.Euler(0, 0, lookAngle);
+        direction.Normalize();
+        GameObject.Instantiate(airSecondary.Projectile.ProjectilePrefab, _context.player.position, fire.rotation).TryGetComponent<Projectile>(out var projectile);
+        Physics2D.IgnoreCollision(playerCollider, projectile.GetComponent<Collider2D>());
+        projectile.Instantiate(airSecondary.Projectile, direction, _context.player, fire);
+        projectile.onHitEnemy += onSecondaryHit;
+    }
+
+    public override void HandleCoolDown()
+    {
+        if (!canEnableSecondary)
+        {
+            secondaryTimer += Time.deltaTime;
+            if (secondaryTimer >= secondaryCoolDown)
+            {
+                canEnableSecondary = true;
+                secondaryTimer = 0;
+            }
+        }
+
+        primaryTimer += Time.deltaTime;
+        if (primaryTimer >= primaryCoolDown)
+        {
+            canShootPrimary = true;
+        }
     }
 
     private void MakeShootSound()
@@ -88,7 +123,7 @@ public class AirState : AbilityState
         Physics2D.IgnoreCollision(projectile.GetCollider, enemySeekController.GetCollider);
         enemySeekController.TakeDamage(Elements.Air, 1);
 
-        if (projectile.hitCount > maxHitCount)
+        if (projectile.hitCount > PrimaryMaxHitCount)
         {
             GameObject.Destroy(projectile.gameObject, 0.5f);
             projectile.GetRigidbody.velocity = Vector2.zero;
@@ -100,7 +135,33 @@ public class AirState : AbilityState
                 sprite.gameObject.SetActive(false);
             }
 
-            projectile.onPrimaryHitEnemy -= onPrimaryHit;
+            projectile.onHitEnemy -= onPrimaryHit;
         }
+    }
+
+    private void onSecondaryHit(Projectile projectile, EnemySeekController enemySeekController)
+    {
+        projectile.hitCount++;
+        projectile.KeepVelocity();
+        Physics2D.IgnoreCollision(projectile.GetCollider, enemySeekController.GetCollider);
+        enemySeekController.TakeDamage(Elements.Air, 1);
+        var position = enemySeekController.transform.position + 4 * (enemySeekController.transform.position - projectile.transform.position).normalized;
+        enemySeekController.transform.DOMove(position, 2);
+        if (projectile.hitCount > SecondaryMaxHitCount)
+        {
+            GameObject.Destroy(projectile.gameObject, 0.5f);
+            projectile.GetRigidbody.velocity = Vector2.zero;
+            projectile.GetCollider.enabled = false;
+
+            var sprite = projectile.transform.Find("Sprite");
+            if (sprite != null)
+            {
+                sprite.gameObject.SetActive(false);
+            }
+
+            projectile.onHitEnemy -= onPrimaryHit;
+           
+        }
+        secondaryActive = false;
     }
 }

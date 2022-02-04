@@ -62,7 +62,7 @@ public class EarthState : AbilityState
             GameObject.Instantiate(earthPrimary.Projectile.ProjectilePrefab, _context.player.position, Quaternion.identity).TryGetComponent<Projectile>(out var projectile);
             Physics2D.IgnoreCollision(playerCollider, projectile.GetComponent<Collider2D>());
             projectile.Instantiate(earthPrimary.Projectile, direction, _context.player, fire);
-            projectile.onPrimaryHitEnemy += onPrimaryHit;
+            projectile.onHitEnemy += onPrimaryHit;
 
             canShootPrimary = false;
             primaryTimer = 0;
@@ -129,7 +129,7 @@ public class EarthState : AbilityState
             sprite.gameObject.SetActive(false);
         }
 
-        projectile.onPrimaryHitEnemy -= onPrimaryHit;
+        projectile.onHitEnemy -= onPrimaryHit;
         GameObject.Destroy(projectile.gameObject, 0.5f);
 
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(projectile.transform.position, primaryRadius);

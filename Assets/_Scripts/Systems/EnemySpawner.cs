@@ -153,21 +153,22 @@ public class EnemySpawner : MonoBehaviour
 
     private Vector3 GetOuterViewPort()
     {
+        // In viewport coordinades, the bottom left of the camera view is 0,0 and the top right 1,1
         var randomNumber = Random.Range(0, 4);
         switch(randomNumber)
         {
             // up
             case 0:
-                return Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0, 1), Random.Range(1.2f, 1.4f), 0));
+                return Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(-1.5f, 1.5f), Random.Range(1.2f, 2f), 0));
             // down
             case 1:
-                return Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0, 1), Random.Range(-1.2f, -1.4f), 0));
+                return Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(-1.5f, 1.5f), Random.Range(-1.5f, -1.0f), 0));
             // left
             case 2:
-                return Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(-1.2f, -1.4f), Random.Range(0, 1), 0));
+                return Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(-2f, 0.2f), Random.Range(0, 1.1f), 0));
             // right
             case 3:
-                return Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(1.2f, 1.4f), Random.Range(0, 1) , 0));
+                return Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(1.2f, 2f), Random.Range(0, 1.1f) , 0));
             default:
                 return Vector3.zero;
         }
@@ -176,7 +177,6 @@ public class EnemySpawner : MonoBehaviour
     private void SpawnFormation()
     {
         var randomElement = GetRandomElement();
-        // In viewport coordinades, the bottom left of the camera view is 0,0 and the top right 1,1
         var newPosition = GetOuterViewPort();
 
         var formationPrefab = GetRandomFormation();

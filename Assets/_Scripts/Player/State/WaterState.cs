@@ -54,7 +54,7 @@ public class WaterState : AbilityState
             GameObject.Instantiate(waterPrimary.Projectile.ProjectilePrefab, _context.player.position, fire.rotation).TryGetComponent<Projectile>(out var projectile);
             Physics2D.IgnoreCollision(playerCollider, projectile.GetComponent<Collider2D>());
             projectile.Instantiate(waterPrimary.Projectile, direction, _context.player, fire);
-            projectile.onPrimaryHitEnemy += onPrimaryHit;
+            projectile.onHitEnemy += onPrimaryHit;
 
             canShootPrimary = false;
             primaryTimer = 0;
@@ -87,7 +87,7 @@ public class WaterState : AbilityState
                 sprite.gameObject.SetActive(false);
             }
 
-            projectile.onPrimaryHitEnemy -= onPrimaryHit;
+            projectile.onHitEnemy -= onPrimaryHit;
         }
     }
 }

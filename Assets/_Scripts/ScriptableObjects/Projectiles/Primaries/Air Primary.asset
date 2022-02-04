@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8983a2b64872b748a85628e0f76c9a6, type: 3}
   m_Name: Air Primary
   m_EditorClassIdentifier: 
-  projectile: {fileID: 7082526359450386466, guid: e9b02842dcbee664284410079595d001,
+  projectile: {fileID: 7082526359450386466, guid: ea7c02a156c4ede498b29480688552b9,
     type: 3}
   speed: 30
   damageFX: {fileID: 0}

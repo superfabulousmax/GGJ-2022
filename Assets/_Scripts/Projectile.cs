@@ -11,7 +11,7 @@ public class Projectile : MonoBehaviour, ICreateElement
     private Vector2 _direction;
 
     public int hitCount = 0;
-    public event Action<Projectile, EnemySeekController> onPrimaryHitEnemy;
+    public event Action<Projectile, EnemySeekController> onHitEnemy;
     public Collider2D GetCollider => _collider;
     public Rigidbody2D GetRigidbody => _rigidBody;
 
@@ -38,9 +38,21 @@ public class Projectile : MonoBehaviour, ICreateElement
     {
         if (col.gameObject.TryGetComponent(out EnemySeekController enemy))
         {
-            onPrimaryHitEnemy?.Invoke(this, enemy);
+            onHitEnemy?.Invoke(this, enemy);
         }
         if (col.gameObject.GetComponent<Projectile>() != null)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.TryGetComponent(out EnemySeekController enemy))
+        {
+            onHitEnemy?.Invoke(this, enemy);
+        }
+        if (collider.gameObject.GetComponent<Projectile>() != null)
         {
             Destroy(gameObject);
         }
