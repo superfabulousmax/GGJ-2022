@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PlayerScrollingBackgroundController : MonoBehaviour
 {
+    [SerializeField] private float scrollSpeedFactor = 0.1f;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+
 
     void Update()
     {
-        _spriteRenderer.material.mainTextureOffset = transform.position * 0.05f;
+        _spriteRenderer.material.mainTextureOffset = transform.position * scrollSpeedFactor;
     }
 }
