@@ -290,32 +290,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2041233492946502139, guid: 6f1e3e9b715be9f498e5e81c4015301c,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 73b6c67c05ba19146966d12ec47dc663,
-        type: 3}
-    - target: {fileID: 2041233492946502139, guid: 6f1e3e9b715be9f498e5e81c4015301c,
-        type: 3}
-      propertyPath: m_DrawMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2777623431575603541, guid: 6f1e3e9b715be9f498e5e81c4015301c,
-        type: 3}
-      propertyPath: m_Radius
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2777623431575603541, guid: 6f1e3e9b715be9f498e5e81c4015301c,
-        type: 3}
-      propertyPath: m_Offset.x
-      value: -0.04
-      objectReference: {fileID: 0}
-    - target: {fileID: 2777623431575603541, guid: 6f1e3e9b715be9f498e5e81c4015301c,
-        type: 3}
-      propertyPath: m_Offset.y
-      value: 0.06
-      objectReference: {fileID: 0}
     - target: {fileID: 2777623431575603544, guid: 6f1e3e9b715be9f498e5e81c4015301c,
         type: 3}
       propertyPath: m_RootOrder
@@ -375,26 +349,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5439581363094357364, guid: 6f1e3e9b715be9f498e5e81c4015301c,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.08
-      objectReference: {fileID: 0}
-    - target: {fileID: 5559673106552756431, guid: 6f1e3e9b715be9f498e5e81c4015301c,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 5559673106552756431, guid: 6f1e3e9b715be9f498e5e81c4015301c,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 8850090730901941533, guid: 6f1e3e9b715be9f498e5e81c4015301c,
-        type: 3}
-      propertyPath: scrollSpeedFactor
-      value: 0.125
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f1e3e9b715be9f498e5e81c4015301c, type: 3}
