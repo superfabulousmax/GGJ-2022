@@ -13,7 +13,7 @@ public class UIManager : PersistentSingleton<UIManager>
     private GameObject canvas;
     private Transform iconContainer;
     private Transform [] icons;
-    private Outline [] outlines;
+    private Image [] outlines;
     private TMP_Text gameOverText;
     private TMP_Text timer;
     private float timeElapsed;
@@ -40,7 +40,7 @@ public class UIManager : PersistentSingleton<UIManager>
         coolDowns = canvas.transform.GetChild(0).GetChild(4).GetComponentsInChildren<UICoolDown>();
         iconContainer = canvas.transform.GetChild(0).GetChild(0);
         icons = iconContainer.GetComponentsInChildren<Transform>();
-        outlines = icons.Select(icon => icon.GetComponent<Outline>()).Where(outline => outline != null).ToArray();
+        outlines = icons.Select(icon => icon.GetComponent<Image>()).TakeLast(4).ToArray();
         SelectIcon(Elements.Fire);
         timeElapsed = 0;
     }
