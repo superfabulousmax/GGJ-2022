@@ -597,3 +597,20 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3dd2cd788432c9041a0ba79093c5b60e, type: 3}
   - {fileID: 21300000, guid: 17124e664db73bd4abbf01a96e02e794, type: 3}
   - {fileID: 21300000, guid: f56025d368aa28c4399a446270350650, type: 3}
+--- !u!114 &6259403051046716733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5257415665099487448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: e5f7a938652b6764daeaeae94b8ddd78, type: 2}
