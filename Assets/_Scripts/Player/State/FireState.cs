@@ -85,6 +85,7 @@ public class FireState : AbilityState
 
     private void EnableSecondary()
     {
+        UIManager.Instance.SetSecondaryCooldown(Elements.Fire);
         secondaryActive = true;
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = (mousePos - (Vector2)_context.player.position);

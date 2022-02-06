@@ -76,6 +76,7 @@ public class AirState : AbilityState
 
     private void EnableSecondary()
     {
+        UIManager.Instance.SetSecondaryCooldown(Elements.Air);
         canEnableSecondary = false;
         secondaryActive = true;
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

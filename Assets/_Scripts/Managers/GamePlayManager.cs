@@ -61,7 +61,7 @@ public class GamePlayManager : MonoBehaviour
     public bool IsGameOver { get => isGameOver; }
 
     public static GamePlayManager Instance;
-
+    private int scrollIndex;
 
     private void Awake()
     {
@@ -85,7 +85,7 @@ public class GamePlayManager : MonoBehaviour
         onPlayerInstantiated = OnPlayerInstantiated;
         onGameOver = SetGameOver;
         currentAbilities = fireAbilitySet;
-
+        scrollIndex = 0;
         // Load
         LoadPrimaries();
         _playerPrefab = Resources.Load<GameObject>("Prefabs/Player");
@@ -163,6 +163,8 @@ public class GamePlayManager : MonoBehaviour
         fireAbilitySet = new AbilitySet() { primary = primaryAbilities.fire, secondary = secondaryAbilities.fire };
         fireState.SetAbilities(fireAbilitySet);
         fireState.SetAudio(sound.audioSource, sound.firePrimaryDamage);
+        UIManager.Instance.CoolDowns[(int)Elements.Fire].InitializeTimer(secondaryAbilities.fire.Cooldown.x);
+        UIManager.Instance.CoolDowns[(int)Elements.Fire].StartTimer();
     }
 
     private void InitWaterState()
@@ -171,6 +173,8 @@ public class GamePlayManager : MonoBehaviour
         waterAbilitySet= new AbilitySet() { primary = primaryAbilities.water, secondary = secondaryAbilities.water };
         waterState.SetAbilities(waterAbilitySet);
         fireState.SetAudio(sound.audioSource, sound.waterPrimaryDamage);
+        UIManager.Instance.CoolDowns[(int)Elements.Water].InitializeTimer(secondaryAbilities.water.Cooldown.x);
+        UIManager.Instance.CoolDowns[(int)Elements.Water].StartTimer();
     }
     private void InitEarthState()
     {
@@ -178,6 +182,8 @@ public class GamePlayManager : MonoBehaviour
         earthAbilitySet = new AbilitySet() { primary = primaryAbilities.earth, secondary = secondaryAbilities.earth };
         earthState.SetAbilities(earthAbilitySet);
         fireState.SetAudio(sound.audioSource, sound.earthPrimaryDamage);
+        UIManager.Instance.CoolDowns[(int)Elements.Earth].InitializeTimer(secondaryAbilities.earth.Cooldown.x);
+        UIManager.Instance.CoolDowns[(int)Elements.Earth].StartTimer();
     }
     private void InitAirState()
     {
@@ -185,45 +191,36 @@ public class GamePlayManager : MonoBehaviour
         airAbilitySet = new AbilitySet() { primary = primaryAbilities.air, secondary = secondaryAbilities.air };
         airState.SetAbilities(airAbilitySet);
         fireState.SetAudio(sound.audioSource, sound.airPrimaryDamage);
+        UIManager.Instance.CoolDowns[(int)Elements.Air].InitializeTimer(secondaryAbilities.air.Cooldown.x);
+        UIManager.Instance.CoolDowns[(int)Elements.Air].StartTimer();
     }
 
     public void Update()
     {
         if (isGameOver)
             return;
-        // todo select via scroll wheel y
-        var y = Input.mouseScrollDelta.y;
-        if(y != 0)
-        {
 
-        }
+        HandleScrollInput();
+
         // fire
         if (currentState != fireState && Input.GetKeyDown(KeyCode.Alpha1))
         {
-            changeAbility?.Invoke(fireAbilitySet, fireState);
-            currentState = fireState;
-            selectIcon?.Invoke(Elements.Fire);
+            ChangeToFire();
         }
         // water
         if (currentState != waterState && Input.GetKeyDown(KeyCode.Alpha2))
         {
-            changeAbility?.Invoke(waterAbilitySet, waterState);
-            selectIcon?.Invoke(Elements.Water);
-            currentState = waterState;
+            ChangeToWater();
         }
         // air
         if (currentState != airState && Input.GetKeyDown(KeyCode.Alpha3))
         {
-            changeAbility?.Invoke(airAbilitySet, airState);
-            selectIcon?.Invoke(Elements.Air);
-            currentState = airState;
+            ChangeToAir();
         }
         // earth
         if (currentState != earthState && Input.GetKeyDown(KeyCode.Alpha4))
         {
-            changeAbility?.Invoke(earthAbilitySet, earthState);
-            selectIcon?.Invoke(Elements.Earth);
-            currentState = earthState;
+            ChangeToEarth();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -237,6 +234,74 @@ public class GamePlayManager : MonoBehaviour
         waterState.HandleCoolDown();
         airState.HandleCoolDown();
         earthState.HandleCoolDown();
+    }
+
+    private void HandleScrollInput()
+    {
+        var y = Input.mouseScrollDelta.y;
+        if (y != 0)
+        {
+            if(y > 0)
+            {
+                scrollIndex = (scrollIndex + 1) % 4;
+            }
+            else
+            {
+                if(scrollIndex - 1 < 0)
+                {
+                    scrollIndex = 3;
+                }
+                else
+                {
+                    scrollIndex--;
+                }
+            }
+            
+            var element = (Elements)scrollIndex;
+            switch (element)
+            {
+                case Elements.Fire:
+                    ChangeToFire();
+                    break;
+                case Elements.Water:
+                    ChangeToWater();
+                    break;
+                case Elements.Air:
+                    ChangeToAir();
+                    break;
+                case Elements.Earth:
+                    ChangeToEarth();
+                    break;
+            }
+        }
+    }
+
+    private void ChangeToFire()
+    {
+        changeAbility?.Invoke(fireAbilitySet, fireState);
+        currentState = fireState;
+        selectIcon?.Invoke(Elements.Fire);
+    }
+
+    private void ChangeToWater()
+    {
+        changeAbility?.Invoke(waterAbilitySet, waterState);
+        selectIcon?.Invoke(Elements.Water);
+        currentState = waterState;
+    }
+
+    private void ChangeToAir()
+    {
+        changeAbility?.Invoke(airAbilitySet, airState);
+        selectIcon?.Invoke(Elements.Air);
+        currentState = airState;
+    }
+
+    private void ChangeToEarth()
+    {
+        changeAbility?.Invoke(earthAbilitySet, earthState);
+        selectIcon?.Invoke(Elements.Earth);
+        currentState = earthState;
     }
 
     private void SetupEnemy()

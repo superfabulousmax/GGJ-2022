@@ -97,6 +97,7 @@ public class EarthState : AbilityState
 
     public void EnableSecondary()
     {
+        UIManager.Instance.SetSecondaryCooldown(Elements.Earth);
         canEnableSecondary = false;
         secondaryActive = true;
         CameraShake.Shake(secondaryDuration, shakeAmount);

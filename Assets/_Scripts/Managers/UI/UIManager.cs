@@ -18,6 +18,9 @@ public class UIManager : PersistentSingleton<UIManager>
     private TMP_Text timer;
     private float timeElapsed;
     public static UIManager Instance;
+    private UICoolDown [] coolDowns;
+
+    public UICoolDown[] CoolDowns { get => coolDowns; }
 
     public void Awake()
     {
@@ -34,6 +37,7 @@ public class UIManager : PersistentSingleton<UIManager>
         gameOverText = canvas.transform.GetChild(0).GetChild(2).GetComponent<TMP_Text>();
         gameOverText.enabled = false;
         timer = canvas.transform.GetChild(0).GetChild(3).GetComponent<TMP_Text>();
+        coolDowns = canvas.transform.GetChild(0).GetChild(4).GetComponentsInChildren<UICoolDown>();
         iconContainer = canvas.transform.GetChild(0).GetChild(0);
         icons = iconContainer.GetComponentsInChildren<Transform>();
         outlines = icons.Select(icon => icon.GetComponent<Outline>()).Where(outline => outline != null).ToArray();
@@ -64,7 +68,8 @@ public class UIManager : PersistentSingleton<UIManager>
     private void Update()
     {
         timeElapsed += Time.deltaTime;
-        timer.text = Math.Round(timeElapsed, 2).ToString();
+        var timespan = TimeSpan.FromSeconds(timeElapsed);
+        timer.text = timespan.ToString(@"mm\:ss");
     }
 
     internal void UpdateDisplayDamage(int amount)
@@ -83,5 +88,10 @@ public class UIManager : PersistentSingleton<UIManager>
     {
         // todo
         //totalKilled = amount;
+    }
+
+    public void SetSecondaryCooldown(Elements element)
+    {
+        UIManager.Instance.CoolDowns[(int)element].StartTimer();
     }
 }
