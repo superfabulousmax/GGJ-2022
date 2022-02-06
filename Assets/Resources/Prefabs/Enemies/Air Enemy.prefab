@@ -9,6 +9,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8253422958467497389, guid: c1fea51eeb5e03f46a6e23b9f9ae8b4a,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8253422958467497389, guid: c1fea51eeb5e03f46a6e23b9f9ae8b4a,
+        type: 3}
       propertyPath: _frameArray.Array.size
       value: 48
       objectReference: {fileID: 0}
@@ -304,7 +309,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d4f8ed75223dec4468eb908deda04d85,
+      objectReference: {fileID: 21300000, guid: a925d9755713fd54e9acf7b95e2a304f,
         type: 3}
     - target: {fileID: 8694994434453494695, guid: c1fea51eeb5e03f46a6e23b9f9ae8b4a,
         type: 3}
@@ -381,5 +386,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8253422958467497389, guid: c1fea51eeb5e03f46a6e23b9f9ae8b4a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c1fea51eeb5e03f46a6e23b9f9ae8b4a, type: 3}
