@@ -7,7 +7,8 @@ public class EnemySpriteLoop : MonoBehaviour
     [SerializeField] private Sprite[] _frameArray;
     private int _currFrame;
     private float _time;
-    private float _fps = 1f/30f;
+
+    private float _fps = 1f/4f;
     private SpriteRenderer _spriteRenderer;
     private bool hasBeenSeen;
 
